@@ -222,20 +222,8 @@ class ApiController extends Controller
  
     public function logout(Request $request)
     {
-        print_r($request);die;
-        try {
-            JWTAuth::invalidate($request->token);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'User logged out successfully'
-            ]);
-        } catch (JWTException $exception) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Sorry, the user cannot be logged out'
-            ], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
+        Auth::guard('api')->logout();
+        return response()->json(['message' => 'logout successfully', 'code' => 200]);
     }
     
 

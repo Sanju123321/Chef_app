@@ -17,8 +17,14 @@ use App\Http\Controllers\ApiController;
 */
 
 
-Route::post('/register', [ApiController::class, 'user_registration']);
-
 Route::post('/login', [ApiController::class, 'user_login']);
 
-Route::post('/get-profile',[ApiController::class, 'profile']); 
+Route::post('/user/forgot-password',[ApiController::class, 'forgot_password']); 
+
+Route::post('/user/reset-password',[ApiController::class, 'reset_password']); 
+
+Route::post('/user/logout',[ApiController::class, 'logout']); 
+
+Route::post('/user/register', [ApiController::class, 'user_registration']);
+
+Route::post('/user/get-profile',[ApiController::class, 'profile']); 
