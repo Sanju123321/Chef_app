@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\backEnd\ProfileController;
 use App\Http\Controllers\backEnd\UserManagementController;
+use App\Http\Controllers\backEnd\ChefController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,13 +41,23 @@ Route::group(['prefix'=>'admin', 'middleware'=>'CheckAdminAuth'],function(){
 	Route::match(['get','post'],'/profile',[ProfileController::class, 'index']);
 	Route::post('/change-password',[ProfileController::class, 'change_password']);
 
-	//user-management
+	//Manage user
 	Route::match(['get','post'],'/user',[UserManagementController::class, 'index']);
 	Route::match(['get','post'],'/user/add',[UserManagementController::class, 'add']);
 	Route::match(['get','post'],'/user/edit/{id}',[UserManagementController::class, 'edit']);
 	Route::match(['get','post'],'/user/delete/{id}',[UserManagementController::class, 'delete']);
 
-
+	//Manage Chef
+	Route::match(['get','post'],'/chef',[ChefController::class, 'index']);
+	Route::match(['get','post'],'/chef/add',[ChefController::class, 'add']);
+	Route::match(['get','post'],'/chef/edit/{id}',[ChefController::class, 'edit']);
+	Route::match(['get','post'],'/chef/delete/{id}',[ChefController::class, 'delete']);
+	
+	//Manage Dish
+	Route::match(['get','post'],'/dish',[DishController::class, 'index']);
+	Route::match(['get','post'],'/dish/add',[DishController::class, 'add']);
+	Route::match(['get','post'],'/dish/edit/{id}',[DishController::class, 'edit']);
+	Route::match(['get','post'],'/dish/delete/{id}',[DishController::class, 'delete']);
 
 });
 

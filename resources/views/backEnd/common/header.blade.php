@@ -5,7 +5,7 @@
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<!-- <a href="index.html"> -->
-			<img src="http://assets.stickpng.com/images/580b57fcd9996e24bc43c529.png" id="header_lgo"/>
+			<!-- /<img src="http://assets.stickpng.com/images/580b57fcd9996e24bc43c529.png" id="header_lgo"/> -->
 			<!-- </a> -->
 			<div class="menu-toggler sidebar-toggler">
 				<!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->

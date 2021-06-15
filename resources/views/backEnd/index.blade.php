@@ -55,7 +55,7 @@
 							Users
 						</div>
 					</div>
-					<a class="more" href="#">
+					<a class="more" href="{{ url('admin/user') }}">
 					View more <i class="m-icon-swapright m-icon-white"></i>
 					</a>
 				</div>
@@ -69,10 +69,10 @@
 						<div class="number">
 						</div>
 						<div class="desc">
-							Products
+							Chefs
 						</div>
 					</div>
-					<a class="more" href="#">
+					<a class="more" href="{{ url('admin/chef') }}">
 					View more <i class="m-icon-swapright m-icon-white"></i>
 					</a>
 				</div>
@@ -86,7 +86,7 @@
 						<div class="number">
 						</div>
 						<div class="desc">
-							Wishlist's
+							Dishes
 						</div>
 					</div>
 					<a class="more" href="#">
@@ -104,7 +104,7 @@
 						<div class="number">
 						</div>
 						<div class="desc">
-							Contents
+							Polices
 						</div>
 					</div>
 					<a class="more" href="#">
@@ -121,7 +121,7 @@
 						<div class="number">
 						</div>
 						<div class="desc">
-							Vendors
+							Total Orders
 						</div>
 					</div>
 					<a class="more" href="#">

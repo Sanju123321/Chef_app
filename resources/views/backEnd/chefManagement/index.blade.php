@@ -1,5 +1,5 @@
 @extends('backEnd.layouts.master')
-@section('title','User management')
+@section('title','Chef management')
 @section('content')
 
 <style type="text/css">
@@ -15,12 +15,12 @@
 <section>
 	<div class="page-content-wrapper ">
 		<div class="page-content">
-			<h3 class="page-title">User Management</h3>
+			<h3 class="page-title">Manage Chef</h3>
 			<div class="page-bar">
 				<ul class="page-breadcrumb">
 					<li>
 						<i class="fa fa-bars"></i>
-						<a href="{{ url('admin/users') }}">Users</a>
+						<a href="{{ url('admin/chef') }}">Chefs</a>
 					</li>
 				</ul>
 
@@ -32,7 +32,7 @@
 								<table class="table table-striped table-bordered table-hover" id="myTable">
 									<div class="table-btn">
 										<div class="btn-group pull-right">
-											<a href= "{{ url('admin/user/add') }}">
+											<a href= "{{ url('admin/chef/add') }}">
 												<button id="sample_editable_1_new" class="btn green">
 												Add New <i class="fa fa-plus"></i>
 												</button>
@@ -41,27 +41,25 @@
 									</div>
 									<thead>
 										<tr>
-											<th>Full Name</th>
-											<th>Bussiness Name</th>
+											<th>Name</th>
 											<th>Email</th>
 											<th>Mobile Number</th>
 											<th>Joined On</th>
 											<th>Action</th>
 										</tr>
 									</thead>
-											@foreach($users as $user)
+										@foreach($chefs as $user)
 										<tr>
-											<td>{{ ucfirst($user['full_name']) }}</td>
-											<td>{{ $user['business_name'] }}</td>
-											<td>{{ ucfirst($user['email']) }}</td>
+											<td>{{ ucfirst($user['name']) }}</td>
+											<td>{{ $user['email'] }}</td>
 											<td>{{ $user['phone_number'] }}</td>	
 											<td>{{ date('d-m-Y H:i:s',strtotime($user['created_at'])) }}</td>
 											<td>
-												<a href="{{ url('admin/user/edit/'.$user['id']) }}"><i class="fa fa-edit"></i></a>
-												<a href="{{ url('admin/user/delete/'.$user['id']) }}" class="del_btn" title="Delete"><i class="fa fa-trash"></i></a>
+												<a href="{{ url('admin/chef/edit/'.$user['id']) }}"><i class="fa fa-edit"></i></a>
+												<a href="{{ url('admin/chef/delete/'.$user['id']) }}" class="del_btn" title="Delete"><i class="fa fa-trash"></i></a>
 											</td>
 										</tr>
-											@endforeach
+										@endforeach
 								</table>
 							</div>					
 						</div>

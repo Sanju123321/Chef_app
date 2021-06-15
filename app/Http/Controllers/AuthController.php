@@ -65,8 +65,6 @@ class AuthController extends Controller
     }
 
     public function dashboard(){
-
-
     	$page = 'dashboard';
     	return view('backEnd.index',compact('page'));
     }

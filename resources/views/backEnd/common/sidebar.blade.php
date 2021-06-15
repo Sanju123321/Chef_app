@@ -32,24 +32,51 @@
 
 			<?php
 				$selected = '';
-				if($page == 'users' ){
+				if($page == 'users'){
 					$selected = "active";
 				}
 			?>
 			<li class="start {{ $selected }}">
-				<a href="javascript:;">
-					<i class="fa fa-users"></i>
-					<span class="title">Users Management</span>
+				<a href="{{ url('admin/user') }}">
+					<i class="fa fa-home"></i>
+					<span class="title">Manage User</span>
 					<span class="selected"></span>
-					<span class="arrow open"></span>
 				</a>
-				<ul class="sub-menu">
-					<li class="<?php if($page == 'users'){ echo 'active'; }?>">
-						<a href="{{ url('admin/user') }}">
-						Users</a>
-					</li>
-				</ul>
+				
 			</li>
+
+
+			<?php
+				$selected = '';
+				if($page == 'chefs'){
+					$selected = "active";
+				}
+			?>
+			<li class="start {{ $selected }}">
+				<a href="{{ url('admin/chef') }}">
+					<i class="fa fa-home"></i>
+					<span class="title">Manage Chefs</span>
+					<span class="selected"></span>
+				</a>
+				
+			</li>
+
+			<?php
+				$selected = '';
+				if($page == 'dishes'){
+					$selected = "active";
+				}
+			?>
+			<li class="start {{ $selected }}">
+				<a href="#">
+					<i class="fa fa-home"></i>
+					<span class="title">Manage Dish</span>
+					<span class="selected"></span>
+				</a>
+				
+			</li>
+
+
 
 		</ul>
 		<!-- END SIDEBAR MENU -->
