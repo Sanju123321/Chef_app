@@ -1,15 +1,7 @@
 @extends('backEnd.layouts.master')
-@section('title','Chef management')
+@section('title','Manage Chef')
 @section('content')
 
-<style type="text/css">
-	input[type="date"].input-sm, input[type="time"].input-sm, input[type="datetime-local"].input-sm, input[type="month"].input-sm {
-	line-height: 17px;
-}
-.daterangepicker .input-mini {
-	width: 100% !important;
-}
-</style>
 <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="http://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <section>
@@ -31,7 +23,7 @@
 							<div class="table-container">
 								<table class="table table-striped table-bordered table-hover" id="myTable">
 									<div class="table-btn">
-										<div class="btn-group pull-right">
+										<div class="btn-group pull-right" style="padding: 10px;">
 											<a href= "{{ url('admin/chef/add') }}">
 												<button id="sample_editable_1_new" class="btn green">
 												Add New <i class="fa fa-plus"></i>

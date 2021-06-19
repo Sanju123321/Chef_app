@@ -10,27 +10,7 @@ use Socialite;
 
 class AuthController extends Controller
 {
-    public function redirect($provider='facebook'){
-        return Socialite::driver($provider)->redirect();
-    }
 
-    public function Callback($provider){
-            $userSocial =   Socialite::driver($provider)->stateless()->user();
-            // dd($userSocial);
-            $users       =   User::where(['email' => $userSocial->getEmail()])->first();
-        if($users){
-                Auth::login($users);
-                return redirect('admin/dashboard')->with('success','Welcome Back '.ucfirst($admin));
-        }else{
-        $user = Admin::create([
-                'name'          => $userSocial->getName(),
-                'email'         => $userSocial->getEmail(),
-                'provider_id'   => $userSocial->getId(),
-                'provider'      => 'facebook',
-            ]);
-         return  redirect('admin/dashboard')->with('success','Admin registered');
-        }
-    }
 
     public function login(Request $request){
 

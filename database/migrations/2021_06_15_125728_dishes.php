@@ -16,13 +16,12 @@ class Dishes extends Migration
         Schema::create('dishes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('security_code')->nullable();
-            $table->BigInteger('phone_number')->nullable();
             $table->string('image')->nullable();
-            $table->string('gender')->nullable();
             $table->text('description')->nullable();
+            $table->double('price')->nullable();
+            $table->integer('time_taken')->nullable();
+            $table->integer('chef_id')->nullable();
+            $table->string('video')->nullable();
             $table->string('status')->nullable();
             $table->Datetime('deleted_at')->nullable();
             $table->timestamps();

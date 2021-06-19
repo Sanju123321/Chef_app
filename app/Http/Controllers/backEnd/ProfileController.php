@@ -31,9 +31,7 @@ class ProfileController extends Controller
 
     			if($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png'){
     				$file_path = base_path().'/'.AdminProfileBasePath;
-    				if(!empty($admin->image)){
-    					unlink($file_path.'/'.$admin->image);
-    				}
+    			
     				move_uploaded_file($_FILES['image']['tmp_name'], $file_path.'/'.$new_name);
 
     				$admin->image = $new_name;

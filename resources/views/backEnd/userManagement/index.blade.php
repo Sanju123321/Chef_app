@@ -1,5 +1,5 @@
 @extends('backEnd.layouts.master')
-@section('title','User management')
+@section('title','Manage User')
 @section('content')
 
 <style type="text/css">
@@ -31,7 +31,7 @@
 							<div class="table-container">
 								<table class="table table-striped table-bordered table-hover" id="myTable">
 									<div class="table-btn">
-										<div class="btn-group pull-right">
+										<div class="btn-group pull-right" style="padding: 10px;">
 											<a href= "{{ url('admin/user/add') }}">
 												<button id="sample_editable_1_new" class="btn green">
 												Add New <i class="fa fa-plus"></i>

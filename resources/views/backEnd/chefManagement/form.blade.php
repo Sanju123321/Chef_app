@@ -79,7 +79,7 @@
 									<div class="form-group">
 										<label class="col-md-3 control-label">Email :</label>
 										<div class="col-md-6">
-											<input type="email" name="email" {{$disabled}} class="form-control" placeholder="Enter Email" value="{{ isset($chef->email)?$chef->email:'' }}"   required="required"/>
+											<input type="email" name="email" {{@$disabled}} class="form-control" placeholder="Enter Email" value="{{ isset($chef->email)?$chef->email:'' }}"   required="required"/>
 										</div>
 									</div>
 								</div>

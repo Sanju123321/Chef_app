@@ -68,12 +68,11 @@
 				}
 			?>
 			<li class="start {{ $selected }}">
-				<a href="#">
+				<a href="{{ url('admin/dish') }}">
 					<i class="fa fa-home"></i>
 					<span class="title">Manage Dish</span>
 					<span class="selected"></span>
 				</a>
-				
 			</li>
 
 

@@ -22,6 +22,7 @@ class ChefController extends Controller
     public function add(Request $request){
         if($request->isMethod('post')){
             $data                               = $request->all();
+            // dd($data);
             $add_chef                           = new Chef;
             $add_chef->name                     = $data['name'];          
             $add_chef->phone_number             = $data['phone_number'];           

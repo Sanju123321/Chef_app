@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\backEnd\ProfileController;
 use App\Http\Controllers\backEnd\UserManagementController;
 use App\Http\Controllers\backEnd\ChefController;
+use App\Http\Controllers\backEnd\DishController;
+
 
 
 /*
