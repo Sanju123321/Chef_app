@@ -49,9 +49,9 @@
 											<th>Action</th>
 										</tr>
 									</thead>
+											@foreach($dishes as $dish)
 										<tr>
 											
-											@foreach($dishes as $dish)
 												<td>{{ ucfirst($dish['name']) }}</td>
 												<?php 
 													if(!empty($dish['image'])) {
@@ -68,8 +68,8 @@
 												<td>
 													<a href="{{ url('admin/dish/delete/'.$dish['id']) }}" class="del_btn" title="Delete"><i class="fa fa-trash"></i></a>
 												</td>
-											@endforeach
 										</tr>
+											@endforeach
 								</table>
 							</div>					
 						</div>
