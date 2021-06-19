@@ -15,18 +15,10 @@
                             <div class="portlet light profile-sidebar-portlet">
                                 <!-- SIDEBAR USERPIC -->
                                 <?php 
-                                    $path = '';
-                                    if (!empty($admin->image)) {
-
-                                        $path = base_path().'/'.AdminProfileBasePath.'/'.$admin->image;
-                                        if (file_exists($path)) {
-                                            $image = AdminProfileImgPath.'/'.$admin->image;
-                                            
-                                        }else{
-                                            $image = DefaultImgPath;    
-                                        }
-                                    }else{
+                                    if($admin->image == ''){
                                         $image = DefaultImgPath;
+                                    } else{
+                                        $image = AdminProfileImgPath.'/'.$admin->image;
                                     }
                                 ?>
                                 <div class="profile-userpic">
