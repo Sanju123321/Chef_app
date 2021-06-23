@@ -44,6 +44,13 @@ return [
         'api' => [
             'driver' => 'jwt',
             'provider' => 'users',
+            'hash' => false,
+        ],
+
+        'chef-api' => [
+            'driver' => 'jwt',
+            'provider' => 'chefs',
+            'hash' => false,
         ],
 
         'admin' => [
@@ -75,15 +82,15 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'chefs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Chef::class,
+        ],
         'admin' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
+
     ],
 
     /*

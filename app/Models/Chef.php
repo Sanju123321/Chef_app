@@ -4,11 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Chef extends Model
+
+class Chef extends Authenticatable implements JWTSubject
 {
     use HasFactory;
-    protected $fillable = [
-        'name','email','password','security_code','phone_number','image'
-    ];
+
+            public function getJWTIdentifier(){
+            return $this->getKey();
+        }
+
+        public function getJWTCustomClaims(){
+            return [];
+        }
+
 }

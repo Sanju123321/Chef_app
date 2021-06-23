@@ -44,8 +44,6 @@
 				</a>
 				
 			</li>
-
-
 			<?php
 				$selected = '';
 				if($page == 'chefs'){
@@ -55,13 +53,16 @@
 			<li class="start {{ $selected }}">
 				<a href="{{ url('admin/chef') }}">
 					<i class="fa fa-home"></i>
-					<span class="title">Manage Chefs</span>
+					<span class="title">Manage Chef</span>
 					<span class="selected"></span>
 				</a>
 				
 			</li>
 
-			<?php
+
+
+
+<!-- 			<?php
 				$selected = '';
 				if($page == 'dishes'){
 					$selected = "active";
@@ -74,7 +75,7 @@
 					<span class="selected"></span>
 				</a>
 			</li>
-
+ -->
 
 
 		</ul>

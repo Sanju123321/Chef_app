@@ -3,18 +3,15 @@
 	if(isset($user)){	
 		$action = url('admin/user/edit/'.$id);
 		$task = "Edit";
-		$form_id = 'edit_user_form';
 		$disabled = 'disabled';
 	}
 	else{	
 		$action = url('admin/user/add');
 		$task = "Add";
-		$form_id = 'add_user_form';
-		$disabled = '';
 	}
 ?>
 @extends('backEnd.layouts.master')
-@section('title', $task .' user')
+@section('title', $task .' User')
 @section('content')
 <style type="text/css">
 	.form-horizontal .radio > span {
@@ -42,17 +39,17 @@
 	<div class="page-content">
 		<div class="tab-content">
 			<h3 class="page-title">
-			User Management </h3>
+			Manage User </h3>
 
 			<div class="page-bar">
 				<ul class="page-breadcrumb">
 					<li>
 						<i class="fa fa-bars"></i>
-						<a href="{{ url('admin/users') }}">User Management</a>
+						<a href="{{ url('admin/user') }}">Manage User</a>
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<a href="{{ Request::fullUrl() }}">{{ $task }} user</a>
+						<a href="#">{{ $task }} User</a>
 					</li>
 				</ul>
 			</div>
@@ -67,55 +64,22 @@
 
 					<div class="portlet-body form">
 						<!-- BEGIN FORM-->
-						<form action="" method="post" class="form-horizontal" id="user_form" enctype="multipart/form-data">
+						<form id="user_form" method="post" class="form-horizontal" enctype="multipart/form-data" autocomplete="off">
 							<div class="form-body">
 
 								<div class="row">
 									<div class="form-group">
-										<label class="col-md-3 control-label">Full Name :</label>
+										<label class="col-md-3 control-label">Name :</label>
 										<div class="col-md-6">
-											<input type="text" name="full_name" class="form-control" placeholder="Enter Full Name" value="{{ isset($user->full_name)?$user->full_name:'' }}" maxlength="255" />
+											<input type="text" name="name" class="form-control" placeholder="Enter Name" value="{{ isset($user->name)?$user->name:'' }}" maxlength="255" required="required" />
 										</div>
 									</div>
 								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">Business Name  :</label>
-										<div class="col-md-6">
-											<input type="text" name="business_name" class="form-control" placeholder="Enter Business Name" value="{{ isset($user->business_name)?$user->business_name:'' }}" maxlength="255" />
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">Country Code  :</label>
-										<div class="col-md-6">
-											<input type="text" name="country_code" class="form-control" placeholder="Enter Country Code" value="{{ isset($user->country_code)?$user->country_code:'' }}" maxlength="255" />
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">Business Name  :</label>
-										<div class="col-md-6">
-											<input type="text" name="business_name" class="form-control" placeholder="Enter Business Name" value="{{ isset($user->business_name)?$user->business_name:'' }}" maxlength="255" />
-										</div>
-									</div>
-								</div>				
-
-								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">Phone Number  :</label>
-										<div class="col-md-6">
-											<input type="number" name="phone_number" class="form-control" placeholder="Enter Phone Number" value="{{ isset($user->phone_number)?$user->phone_number:'' }}"/>
-										</div>
-									</div>
-								</div>	
 								<div class="row">
 									<div class="form-group">
 										<label class="col-md-3 control-label">Email :</label>
 										<div class="col-md-6">
-											<input type="email" name="email" {{$disabled}} class="form-control" placeholder="Enter Email" value="{{ isset($user->email)?$user->email:'' }}" />
+											<input type="email" name="email" {{@$disabled}} class="form-control" placeholder="Enter Email" value="{{ isset($user->email)?$user->email:'' }}"   required="required"/>
 										</div>
 									</div>
 								</div>
@@ -124,10 +88,19 @@
 									<div class="form-group">
 										<label class="col-md-3 control-label">Password  :</label>
 										<div class="col-md-6">
-											<input type="password" name="password" class="form-control" placeholder="Enter Password" value="" maxlength="255" />
+											<input type="password" name="password" class="form-control" placeholder="Enter Password" value="" maxlength="255" required="required" />
 										</div>
 									</div>
-								</div>								
+								</div>		
+								<div class="row">
+									<div class="form-group">
+										<label class="col-md-3 control-label">Phone Number  :</label>
+										<div class="col-md-6">
+											<input type="number" name="phone_number" class="form-control" placeholder="Enter Phone Number" value="{{ isset($user->phone_number)?$user->phone_number:'' }}" required="required" />
+										</div>
+									</div>
+								</div>	
+														
 								<div class="form-group">
 									<label class="col-md-3 control-label">Gender :</label>
 	                                <div class="col-md-6">
@@ -137,46 +110,7 @@
 		                                </select>
 			                        </div>
 	                            </div>							
-								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">Dob  :</label>
-										<div class="col-md-6">
-											<input type="date" name="dob" class="form-control" placeholder="Enter Dob" value="{{ isset($user->dob)?$user->dob:'' }}" maxlength="255" />
-										</div>
-									</div>
-								</div>												
-								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">Street Name :</label>
-										<div class="col-md-6">
-											<input type="text" name="street_name" class="form-control" placeholder="Enter Street Name" value="{{isset($user->street_name)?$user->street_name:''}}" />
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">City :</label>
-										<div class="col-md-6">
-											<input type="text" name="city" class="form-control" placeholder="Enter City" value="{{isset($user->city)?$user->city:''}}" />
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">State :</label>
-										<div class="col-md-6">
-											<input type="text" name="state" class="form-control" placeholder="Enter State" value="{{isset($user->state)?$user->state:''}}" />
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">Country :</label>
-										<div class="col-md-6">
-											<input type="text" name="country" class="form-control" placeholder="Enter Country" value="{{isset($user->country)?$user->country:''}}" />
-										</div>
-									</div>
-								</div>
+
 	                            <div class="form-group">
 									<label class="col-md-3 control-label">Status :</label>
 	                                <div class="col-md-6">
@@ -186,42 +120,22 @@
 		                                </select>
 			                        </div>
 	                            </div>
-	                            <div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">Years Of Experience :</label>
-										<div class="col-md-6">
-											<input type="text" name="years_of_experience" class="form-control" placeholder="Enter Years Of Experience" value="{{isset($user->years_of_experience)?$user->years_of_experience:''}}" />
-										</div>
-									</div>
-								</div>
+
 								<div class="row">
 									<div class="form-group">
-										<label class="col-md-3 control-label">Alternative Country Code :</label>
+										<label class="col-md-3 control-label"> Description :</label>
 										<div class="col-md-6">
-											<input type="text" name="alternative_country_code" class="form-control" placeholder="Enter Alternative Country Code" value="{{isset($user->alternative_country_code)?$user->alternative_country_code:''}}" />
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">Alternative Phone Number :</label>
-										<div class="col-md-6">
-											<input type="text" name="alternative_phone_number" class="form-control" placeholder="Enter Alternative Phone Number" value="{{isset($user->alternative_phone_number)?$user->alternative_phone_number:''}}" />
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">Building Description :</label>
-										<div class="col-md-6">
-											<input type="text" name="building_description" class="form-control" placeholder="Enter Building Description" value="{{isset($user->building_description)?$user->building_description:''}}" />
+											<input type="text" name="description" class="form-control" placeholder="Enter Description" value="{{isset($user->description)?$user->description:''}}"  required="required" />
 										</div>
 									</div>
 								</div>
 
-								<?php 
-									if(!empty($user->profile_image)) {
-										$image = $user->profile_image;
+
+
+								<?php  
+									if(!empty($user->image)) {
+										
+										$image = $user->image;
 									}else{
 										$image = DefaultImgPath;
 									}
@@ -233,16 +147,10 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-3 control-label">New Image :</label>
+									<label class="col-md-3 control-label"></label>
 									<div class="col-md-6">
 										<input type="file" id="img_upload" name="profile_image">	
 									</div>
-
-								<!-- 	<div class="col-md-offset-3 col-md-12">
-										<div class="alert-warning" style="padding:5px; margin-right:60%; margin-top:1%;">
-	                                		<span> <i class="fa fa-warning m-r-5"> </i> Recommended size of the image is 500 x 500 (W x H) pixels </span>	
-										</div>  
-									</div> -->
 								</div>
 							</div>
 
@@ -252,7 +160,7 @@
 								<div class="row">
 									<div class="col-md-offset-3 col-md-9">
 										{{ csrf_field() }}
-										<input type="hidden" name="user_id" value="{{ @$user_id }}" id="user_id">
+										<input type="hidden" name="user_id" value="{{ @$id }}" id="user_id">
 										<button type="submit" name="button" class="btn green">Submit</button>
 									    <a href="{{ url('admin/user') }}"><button class="btn btn-default m-l-10" type="button" name="cancel">Cancel </button></a>
 									</div>
@@ -294,6 +202,7 @@
 
                 var ext = img_arr.pop();
                 ext = ext.toLowerCase();
+                // alert(ext); return false;
 
                 if(ext == 'jpeg' || ext == 'jpg' || ext == 'png')
                 {
@@ -308,6 +217,5 @@
             }
         });
     });
-
 </script>
 @endsection
