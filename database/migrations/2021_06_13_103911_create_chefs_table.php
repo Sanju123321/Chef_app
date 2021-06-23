@@ -15,15 +15,25 @@ class CreateChefsTable extends Migration
     {
         Schema::create('chefs', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('security_code')->nullable();
+            $table->string('full_name');
+            $table->string('business_name')->nullable();
+            $table->string('country_code')->nullable();
             $table->BigInteger('phone_number')->nullable();
-            $table->string('image')->nullable();
+            $table->Integer('alternative_country_code')->nullable();
+            $table->BigInteger('alternative_phone_number')->nullable();
+            $table->string('email')->unique();
+            $table->String('password');
             $table->string('gender')->nullable();
-            $table->text('description')->nullable();
-            $table->string('status')->nullable();
+            $table->string('secret_key')->nullable();
+            $table->date('dob')->nullable();
+            $table->string('years_of_experience')->nullable();
+            $table->string('profile_image')->nullable();
+            $table->string('street_name')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
+            $table->text('building_description')->nullable();
+            $table->string('status')->nullable();            
             $table->Datetime('deleted_at')->nullable();
             $table->timestamps();
         });

@@ -10,11 +10,13 @@ use SymfonyComponentHttpFoundationResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
+use App\Models\Chef;
 use App\Models\Admin;
 use Mail, Hash, Auth;
+
 class ApiController extends Controller
 {
-    public function user_registration(Request $request)
+    public function chef_registration(Request $request)
     {
         $data = $request->all();
         $validator = Validator::make(
@@ -38,43 +40,42 @@ class ApiController extends Controller
         );
 
         if ($validator->fails()) {
-
             return response()->json(['error' => $validator->errors()], 200);
         }
 
-        $check_email_exists = User::where('email', $data['email'])->first();
+        $check_email_exists = Chef::where('email', $data['email'])->first();
         if (!empty($check_email_exists)) {
             return response()->json(['error' => 'This Email is already exists.'], 200);
         }
 
 
-        $user                               = new User();
-        $user->full_name                    = $data['full_name'];
-        $user->business_name                = $data['business_name'];
-        $user->country_code                 = $data['country_code'];
-        $user->phone_number                 = $data['phone_number'];
-        $user->email                        = $data['email'];
-        $hash_password                      = Hash::make($data['password']);
-        $user->password                     = str_replace("$2y$", "$2a$", $hash_password);
-        $user->gender                       = $data['gender'];
-        $user->dob                          = date('Y-m-d',strtotime($data['dob']));
-        $user->years_of_experience          = $data['years_of_experience'];
-        $user->street_name                  = $data['street_name'];
-        $user->city                         = $data['city'];
-        $user->state                        = $data['state'];
-        $user->country                      = $data['country'];
-        $user->status                       = 'Active';
-        $user->alternative_country_code     = isset($data['alternative_country_code']) ? $data['alternative_country_code'] : Null;
-        $user->alternative_phone_number     = isset($data['alternative_phone_number']) ? $data['alternative_phone_number'] : Null;
-        $user->building_description         = isset($data['building_description']) ? $data['building_description'] : Null;
-        if ($user->save()) {
-            return response()->json(['success' => true, 'data' => $user], Response::HTTP_OK);
+        $add_chef                               = new Chef();
+        $add_chef->full_name                    = $data['full_name'];
+        $add_chef->business_name                = $data['business_name'];
+        $add_chef->country_code                 = $data['country_code'];
+        $add_chef->phone_number                 = $data['phone_number'];
+        $add_chef->email                        = $data['email'];
+        $hash_password                         = Hash::make($data['password']);
+        $add_chef->password                     = str_replace("$2y$", "$2a$", $hash_password);
+        $add_chef->gender                       = $data['gender'];
+        $add_chef->dob                          = date('Y-m-d',strtotime($data['dob']));
+        $add_chef->years_of_experience          = $data['years_of_experience'];
+        $add_chef->street_name                  = $data['street_name'];
+        $add_chef->city                         = $data['city'];
+        $add_chef->state                        = $data['state'];
+        $add_chef->country                      = $data['country'];
+        $add_chef->status                       = 'Active';
+        $add_chef->alternative_country_code     = isset($data['alternative_country_code']) ? $data['alternative_country_code'] : Null;
+        $add_chef->alternative_phone_number     = isset($data['alternative_phone_number']) ? $data['alternative_phone_number'] : Null;
+        $add_chef->building_description         = isset($data['building_description']) ? $data['building_description'] : Null;
+        if ($add_chef->save()) {
+            return response()->json(['success' => true, 'data' => $add_chef], Response::HTTP_OK);
         } else {
             return response()->json(['error' => false, 'data' => 'Something went wrong, Please try again later.']);
         }
     }
 
-    public function user_login(Request $request)
+    public function chef_login(Request $request)
     {
         $credentials = $request->only('email', 'password');
         // print_r('here'); die;
@@ -90,7 +91,7 @@ class ApiController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 200);
         }
-        $token = auth()->attempt($credentials);
+        $token = Auth('chef-api')->attempt($credentials);
         if ($token ) {
             return $this->respondWithToken($token);
         } else {
@@ -99,7 +100,7 @@ class ApiController extends Controller
         }
     }
 
-    public function forgot_password(Request $request)
+    public function chef_forgot_password(Request $request)
     {
         $validator = Validator::make(
             $request->all(),
@@ -114,7 +115,7 @@ class ApiController extends Controller
         }
 
 
-        $check_email_exists = User::where('email', $request['email'])->first();
+        $check_email_exists = Chef::where('email', $request['email'])->first();
         if (empty($check_email_exists)) {
             return response()->json(['error' => 'Email not exists.'], 200);
         }
@@ -138,7 +139,7 @@ class ApiController extends Controller
         }
     }
 
-    public function reset_password(Request $request)
+    public function chef_reset_password(Request $request)
     {
         $data = $request->all();
         $validator = Validator::make(
@@ -158,7 +159,7 @@ class ApiController extends Controller
 
 
         $email = $data['email'];
-        $check_email = User::where('email', $email)->first();
+        $check_email = Chef::where('email', $email)->first();
         if (empty($check_email['secret_key'])) {
             return response()->json(['error' => 'Something went wrong, Please try again later.']);
         }
@@ -180,11 +181,11 @@ class ApiController extends Controller
         }
     }
 
-    public function profile(Request $request)
+    public function chef_profile(Request $request)
     {
 
         try {
-            $user = auth()->userOrFail();
+            $user = Auth('chef-api')->userOrFail();
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
             return response()->json(['error' => $e->getMessage()], 200);
         }
@@ -192,7 +193,7 @@ class ApiController extends Controller
         return response()->json(['success' => true, 'data' => $user], 200);
     }
 
-    public function updateProfile(Request $request)
+    public function Chef_updateProfile(Request $request)
     {
         $data = $request->all();
         $validator = Validator::make(
@@ -207,7 +208,7 @@ class ApiController extends Controller
             return response()->json(['error' => $validator->errors()], 200);
         }
 
-        $user_id = Auth::User()->id;
+        $user_id = Auth('chef-api')::User()->id;
         $update_profile =  User::where('id',$user_id)->first();
         $update_profile->first_name         = $data['first_name'];
         $update_profile->mobile_number      = $data['mobile_number'];
@@ -220,7 +221,7 @@ class ApiController extends Controller
     }
 
  
-    public function logout(Request $request)
+    public function Chef_logout(Request $request)
     {
         Auth::guard('api')->logout();
         return response()->json(['message' => 'logout successfully', 'code' => 200]);

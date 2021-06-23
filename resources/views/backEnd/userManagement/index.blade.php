@@ -2,25 +2,17 @@
 @section('title','Manage User')
 @section('content')
 
-<style type="text/css">
-	input[type="date"].input-sm, input[type="time"].input-sm, input[type="datetime-local"].input-sm, input[type="month"].input-sm {
-	line-height: 17px;
-}
-.daterangepicker .input-mini {
-	width: 100% !important;
-}
-</style>
 <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="http://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <section>
 	<div class="page-content-wrapper ">
 		<div class="page-content">
-			<h3 class="page-title">User Management</h3>
+			<h3 class="page-title">Manage User</h3>
 			<div class="page-bar">
 				<ul class="page-breadcrumb">
 					<li>
 						<i class="fa fa-bars"></i>
-						<a href="{{ url('admin/users') }}">Users</a>
+						<a href="{{ url('admin/chef') }}">Users</a>
 					</li>
 				</ul>
 
@@ -41,19 +33,17 @@
 									</div>
 									<thead>
 										<tr>
-											<th>Full Name</th>
-											<th>Bussiness Name</th>
+											<th>Name</th>
 											<th>Email</th>
 											<th>Mobile Number</th>
 											<th>Joined On</th>
 											<th>Action</th>
 										</tr>
 									</thead>
-											@foreach($users as $user)
+										@foreach($users as $user)
 										<tr>
-											<td>{{ ucfirst($user['full_name']) }}</td>
-											<td>{{ $user['business_name'] }}</td>
-											<td>{{ ucfirst($user['email']) }}</td>
+											<td>{{ ucfirst($user['name']) }}</td>
+											<td>{{ $user['email'] }}</td>
 											<td>{{ $user['phone_number'] }}</td>	
 											<td>{{ date('d-m-Y H:i:s',strtotime($user['created_at'])) }}</td>
 											<td>
@@ -61,7 +51,7 @@
 												<a href="{{ url('admin/user/delete/'.$user['id']) }}" class="del_btn" title="Delete"><i class="fa fa-trash"></i></a>
 											</td>
 										</tr>
-											@endforeach
+										@endforeach
 								</table>
 							</div>					
 						</div>

@@ -1,6 +1,8 @@
 /node_modules
 /public/storage
+
 /public/images/dish
+/public/images/users
 /public/images/Chef
 /public/images/profile/admin
 /storage/*.key

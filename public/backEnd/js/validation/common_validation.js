@@ -34,58 +34,6 @@ $('#change_password_form').validate({
 
 $('#user_form').validate({
  	rules:{
- 		full_name:{
- 			required:true,
- 			minlength:2,
- 			maxlength:100,
- 		},
- 		business_name:{
- 			required:true,
- 			minlength:2,
- 			maxlength:100,
- 		},
- 		country_code:{
- 			required:true,
- 		},
- 		phone_number:{
- 			required:true,
- 		},
- 		email:{
- 			required:true,
- 		},
- 		password:{
- 			required:true,
- 		},
- 		gender:{
- 			required:true,
- 		},
- 		dob:{
- 			required:true,
- 		},
- 		street_name:{
- 			required:true,
- 		},
- 		city:{
- 			required:true,
- 		},
- 		state:{
- 			required:true,
- 		},
- 		country:{
- 			required:true,
- 		},
- 		status:{
- 			required:true,
- 		},
- 		years_of_experience:{
- 			required:true,
- 		},
- 	}
- });
-
-
-$('#chef_form').validate({
-    rules:{
         name:{
             required:true,
             minlength:2,
@@ -108,4 +56,57 @@ $('#chef_form').validate({
         },
         
     }
+ });
+
+
+$('#chef_form').validate({
+    rules:{
+        full_name:{
+            required:true,
+            minlength:2,
+            maxlength:100,
+        },
+        business_name:{
+            required:true,
+            minlength:2,
+            maxlength:100,
+        },
+        country_code:{
+            required:true,
+        },
+        phone_number:{
+            required:true,
+        },
+        email:{
+            required:true,
+        },
+        password:{
+            required:true,
+        },
+        gender:{
+            required:true,
+        },
+        dob:{
+            required:true,
+        },
+        street_name:{
+            required:true,
+        },
+        city:{
+            required:true,
+        },
+        state:{
+            required:true,
+        },
+        country:{
+            required:true,
+        },
+        status:{
+            required:true,
+        },
+        years_of_experience:{
+            required:true,
+        },
+    }
+
  });

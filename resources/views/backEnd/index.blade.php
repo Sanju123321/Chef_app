@@ -86,24 +86,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-				<div class="dashboard-stat green-haze">
-					<div class="visual">
-						<i class="fa fa-bars"></i>
-					</div>
-					<div class="details">
-						<div class="number">
-						</div>
-						<div class="desc">
-							Dishes
-						</div>
-					</div>
-					<a class="more" href="#">
-					View more <i class="m-icon-swapright m-icon-white"></i>
-					</a>
-				</div>
-				<i class="fa fa-star" aria-hidden="true"></i>
-			</div>
+
 			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 				<div class="dashboard-stat purple-plum">
 					<div class="visual">
