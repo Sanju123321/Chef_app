@@ -20,8 +20,7 @@ class UserManagementController extends Controller
         if($request->isMethod('post')){
             $data                           = $request->all();
             $user                           = new User;
-            $user->name                     = $data['name'];          
-            $user->phone_number             = $data['phone_number'];           
+            $user->name                     = $data['name'];                    
             $user->gender                   = $data['gender'];           
             $user->email                    = $data['email']; 
             $hash_password                  = Hash::make($data['password']);
