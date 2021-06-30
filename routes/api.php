@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\apis\CommonController;
 
 
 /*
@@ -31,6 +32,7 @@ Route::group(['prefix'=>'chef'],function(){
 
 
 
+Route::post('/chef/listing', [CommonController::class, 'chef_listing']);
 
 Route::group(['prefix'=>'user'],function(){
 	Route::post('/login', [ApiController::class, 'user_login']);
