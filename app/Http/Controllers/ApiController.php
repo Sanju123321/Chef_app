@@ -87,7 +87,13 @@ class ApiController extends Controller
                 'gender'             => 'required',
                 'email'              => 'required|email',
                 'password'           => 'required',
-                'confirm_password'   => 'required|same:password'
+                'confirm_password'   => 'required|same:password',
+                'full_name'          => 'required',
+                'country_code'       => 'required',
+                'address'            => 'required',
+                'city'               => 'required',
+                'state'              => 'required',
+                'country'            => 'required'
             ]
         );
 
@@ -100,6 +106,7 @@ class ApiController extends Controller
         }
 
             $add_user                           = new User;
+            $add_user->full_name                = $data['full_name'];          
             $add_user->name                     = $data['name'];          
             $add_user->phone_number             = $data['phone_number'];           
             $add_user->gender                   = $data['gender'];           
@@ -108,6 +115,11 @@ class ApiController extends Controller
             $add_user->password                 = str_replace("$2y$", "$2a$", $hash_password);
             $add_user->status                   = 'active';
             $add_user->description              = isset($data['description']) ? $data['description'] : '';
+            $add->country_code                  = $data['country_code'];
+            $add->address                       = $data['address'];
+            $add->city                          = $data['city'];
+            $add->state                         = $data['state'];
+            $add->country                       = $data['country'];
 
         if ($add_user->save()) {
             return response()->json(['success' => true, 'data' => $add_user], Response::HTTP_OK);
