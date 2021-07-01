@@ -69,7 +69,7 @@ class ChefController extends Controller
             $update_chef->country_code             = $data['country_code'];           
             $update_chef->phone_number             = $data['phone_number'];           
             $update_chef->gender                   = $data['gender'];           
-            $update_chef->email                    = $data['email'];   
+            // $update_chef->email                    = $data['email'];   
             $update_chef->street_name              = $data['street_name'];   
             $update_chef->country                  = $data['country'];
             $update_chef->state                    = $data['state'];   

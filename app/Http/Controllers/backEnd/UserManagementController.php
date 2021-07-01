@@ -7,7 +7,7 @@ use App\Exports\UsersExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
 use Hash;
-
+use App\Models\Country;
 class UserManagementController extends Controller
 {
     public function index(Request $request){   
@@ -28,6 +28,11 @@ class UserManagementController extends Controller
             $user->phone_number             = $data['phone_number'];
             $user->status                   = $data['status'];
             $user->description              = isset($data['description']) ? $data['description'] : '';
+            $user->country_code             = $data['country_code'];
+            $user->address                  = $data['address'];
+            $user->city                     = $data['city'];
+            $user->state                    = $data['state'];
+            $user->country                  = $data['country'];
             if(!empty($_FILES['profile_image']['name'])){
                 $fileName = time() . '.' . $request->profile_image->extension();
                 $base_url = url('images/Chef');
@@ -41,8 +46,9 @@ class UserManagementController extends Controller
                 return redirect('admin/user')->with('error',COMMON_ERROR);
             }
         }
+        $countries = Country::get()->toArray();
         $page = "users";
-        return view('backEnd.userManagement.form',compact('page'));
+        return view('backEnd.userManagement.form',compact('page','countries'));
     }
 
     public function edit(Request $request, $id){
@@ -53,11 +59,16 @@ class UserManagementController extends Controller
             $user_edit->name                     = $data['name'];          
             $user_edit->phone_number             = $data['phone_number'];           
             $user_edit->gender                   = $data['gender'];           
-            $user_edit->email                    = $data['email']; 
+            // $user_edit->email                    = $data['email']; 
             $hash_password                       = Hash::make($data['password']);
             $user_edit->password                 = str_replace("$2y$", "$2a$", $hash_password);
             $user_edit->phone_number             = $data['phone_number'];
             $user_edit->status                   = $data['status'];
+            $user_edit->country_code             = $data['country_code'];
+            $user_edit->address                  = $data['address'];
+            $user_edit->city                     = $data['city'];
+            $user_edit->state                    = $data['state'];
+            $user_edit->country                  = $data['country'];
             $user_edit->description              = isset($data['description']) ? $data['description'] : $user_edit->description;
             if(!empty($_FILES['profile_image']['name'])){
                 $fileName = time() . '.' . $request->profile_image->extension();
@@ -73,9 +84,10 @@ class UserManagementController extends Controller
             }
         }
 
+        $countries = Country::get()->toArray();
         $user = User::where('id',$id)->first();
         $page = "users";
-        return view('backEnd.userManagement.form',compact('page','user','id'));
+        return view('backEnd.userManagement.form',compact('page','user','id','countries'));
     }
 
     public function delete($id){

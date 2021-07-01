@@ -54,7 +54,21 @@ $('#user_form').validate({
         status:{
             required:true,
         },
-        
+        country_code:{
+            required:true,
+        },
+        address:{
+            required:true,
+        },
+        city:{
+            required:true,
+        },
+        state:{
+            required:true,
+        },
+        country:{
+            required:true,
+        }
     }
  });
 

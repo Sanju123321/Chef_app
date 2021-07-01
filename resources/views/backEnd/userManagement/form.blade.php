@@ -91,7 +91,22 @@
 											<input type="password" name="password" class="form-control" placeholder="Enter Password" value="" maxlength="255" required="required" />
 										</div>
 									</div>
-								</div>		
+								</div>	
+
+								<div class="row">
+									<div class="form-group">
+										<label class="col-md-3 control-label">Country Code  :</label>
+										<div class="col-md-6">
+											<select name="country_code" class="form-control">
+												<option selected disabled>Select Country Code</option>
+												@foreach($countries as $country)
+													<option value="{{ $country['id'] }}" <?php if($country['id'] == @$user['country_code']){ echo "selected"; } ?>>{{ $country['phone_code'] }} - ({{ $country['country_name'] }})</option>
+												@endforeach
+											</select>
+										</div>
+									</div>
+								</div>
+
 								<div class="row">
 									<div class="form-group">
 										<label class="col-md-3 control-label">Phone Number  :</label>
@@ -100,6 +115,39 @@
 										</div>
 									</div>
 								</div>	
+
+								<div class="row">
+									<div class="form-group">
+										<label class="col-md-3 control-label">Address :</label>
+										<div class="col-md-6">
+											<input type="text" name="address" class="form-control" placeholder="Enter Address" value="{{ isset($user->address)?$user->address:'' }}" required="required" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="col-md-3 control-label">City  :</label>
+										<div class="col-md-6">
+											<input type="text" name="city" class="form-control" placeholder="Enter City" value="{{ isset($user->city)?$user->city:'' }}" required="required" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="col-md-3 control-label">State  :</label>
+										<div class="col-md-6">
+											<input type="text" name="state" class="form-control" placeholder="Enter Country" value="{{ isset($user->state)?$user->state:'' }}" required="required" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<label class="col-md-3 control-label">Country  :</label>
+										<div class="col-md-6">
+											<input type="text" name="country" class="form-control" placeholder="Enter Country" value="{{ isset($user->country)?$user->country:'' }}" required="required" />
+										</div>
+									</div>
+								</div>
 														
 								<div class="form-group">
 									<label class="col-md-3 control-label">Gender :</label>

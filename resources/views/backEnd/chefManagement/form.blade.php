@@ -188,14 +188,7 @@
 										</div>
 									</div>
 								</div>
-<!-- 								<div class="row">
-									<div class="form-group">
-										<label class="col-md-3 control-label">Alternative Country Code :</label>
-										<div class="col-md-6">
-											<input type="text" name="alternative_country_code" class="form-control" placeholder="Enter Alternative Country Code" value="{{isset($chef->alternative_country_code)?$chef->alternative_country_code:''}}" />
-										</div>
-									</div>
-								</div> -->
+
 								<div class="row">
 									<div class="form-group">
 										<label class="col-md-3 control-label">Alternative Phone Number :</label>
