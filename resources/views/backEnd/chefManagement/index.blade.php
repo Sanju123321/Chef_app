@@ -58,6 +58,7 @@
 											<td>{{ date('d-m-Y H:i:s',strtotime($chef['created_at'])) }}</td>
 											<td>
 												<a href="{{ url('admin/chef/edit/'.$chef['id']) }}"><i class="fa fa-edit"></i></a>
+												<a href="{{ url('admin/chef/dish/'.$chef['id']) }}"><i class="fa fa-cutlery"></i></a>
 												<a href="{{ url('admin/chef/delete/'.$chef['id']) }}" class="del_btn" title="Delete"><i class="fa fa-trash"></i></a>
 											</td>
 										</tr>

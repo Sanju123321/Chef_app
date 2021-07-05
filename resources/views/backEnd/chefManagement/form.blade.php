@@ -91,7 +91,7 @@
 											<select name="country_code" class="form-control">
 												<option selected disabled>Select Country Code</option>
 												@foreach($countries as $country)
-													<option value="{{ $country['id'] }}" <?php if($country['id'] == $chef['country_code']){ echo "selected"; } ?>>{{ $country['phone_code'] }} - ({{ $country['country_name'] }})</option>
+													<option value="{{ $country['id'] }}" <?php if($country['id'] == @$chef['country_code']){ echo "selected"; } ?>>{{ $country['phone_code'] }} - ({{ $country['country_name'] }})</option>
 												@endforeach
 											</select>
 										</div>

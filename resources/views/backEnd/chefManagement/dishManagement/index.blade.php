@@ -20,10 +20,14 @@
 				<ul class="page-breadcrumb">
 					<li>
 						<i class="fa fa-bars"></i>
-						<a href="{{ url('admin/dish') }}">Dishes</a>
+						<a href="{{ url('admin/chef') }}">Chefs</a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+					<li>
+						<a href="#">Dishes</a>
 					</li>
 				</ul>
-
+	
 			<div class="row">
 				<div class="col-md-12">
 					<div class="portlet box ">
@@ -32,7 +36,7 @@
 								<table class="table table-striped table-bordered table-hover" id="myTable1">
 									<div class="table-btn">
 										<div class="btn-group pull-right" style="padding: 10px;">
-											<a href= "{{ url('admin/dish/add') }}">
+											<a href= "{{ url('admin/chef/dish-add/'.$chef_id) }}">
 												<button id="sample_editable_1_new" class="btn green">
 												Add New <i class="fa fa-plus"></i>
 												</button>
@@ -50,8 +54,9 @@
 										</tr>
 									</thead>
 											@foreach($dishes as $dish)
+
 										<tr>
-											
+										
 												<td>{{ ucfirst($dish['name']) }}</td>
 												<?php 
 													if(!empty($dish['image'])) {
@@ -62,11 +67,11 @@
 													// dd($image);
 												?>
 												<td><img src="{{ @$image }}" height="123" width="137"></td>
-												<td>{{ $dish['chef_name']['name'] }}</td>	
+												<td>{{ $dish['chef_name']['full_name'] }}</td>	
 												<td>{{ $dish['price'] }}</td>	
 												<td>{{ $dish['time_taken'] }}</td>	
 												<td>
-													<a href="{{ url('admin/dish/delete/'.$dish['id']) }}" class="del_btn" title="Delete"><i class="fa fa-trash"></i></a>
+													<a href="{{ url('admin/chef/dish/delete/'.$dish['id']) }}" class="del_btn" title="Delete"><i class="fa fa-trash"></i></a>
 												</td>
 										</tr>
 											@endforeach

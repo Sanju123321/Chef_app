@@ -76,17 +76,7 @@
 									</div>
 								</div>
 
-								<div class="form-group">
-									<label class="col-md-3 control-label">Chef Name :</label>
-	                                <div class="col-md-6">
-		                                <select name="chef_name" class="form-control" required="required">
-		                                	<option value="" selected disabled> Select Chef</option>
-		                                	@foreach($chefs as $value)
-		                                    	<option value="{{ $value['id'] }}" <?php if(@$dish->status == "Active"){ echo 'selected';} ?> >{{ $value['name'] }}</option>
-		                                  	@endforeach
-		                                </select>
-			                        </div>
-	                            </div>
+
 								
 								<?php  
 									if(!empty($dish->image)) {
@@ -104,12 +94,36 @@
 								</div>
 								
 								<div class="form-group">
-									<label class="col-md-3 control-label">New Image :</label>
+									<label class="col-md-3 control-label"></label>
 									<div class="col-md-6">
 										<input type="file" id="img_upload" name="dish_image">	
 									</div>
 								</div>
-							<!-- </div> -->
+								
+								<?php  
+									if(!empty($dish->video)) {
+										
+										$video = $dish->video;
+									}else{
+										$video = DefaultImgPath;
+									}
+								?>
+								<div class="form-group">
+									<label class="col-md-3 control-label">Video :</label>
+									<div class="col-md-3 p-l-15 ">
+										<!-- <video width="320" height="240" controls id="old_video" src=""> -->
+										  <!-- Your browser does not support the video tag. -->
+										<!-- </video> -->
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-md-3 control-label"></label>
+									<div class="col-md-6">
+										<input type="file" id="video_upload" name="video">	
+									</div>
+								</div>
+							
 
 								<div class="row">
 									<div class="form-group">
@@ -180,6 +194,11 @@
 								</div>					
 							</div>
 						</div>	 -->	
+				<!-- 			<input type="hidden" name="ingredient_name[]" value="sugar">
+							<input type="hidden" name="quantity[]" value="12gm">
+							<input type="hidden" name="ingredient_name[]" value="salt">
+							<input type="hidden" name="quantity[]" value="34gm"> -->
+
 								<div class="form-actions top">
 									<div class="row">
 										<div class="col-md-offset-3 col-md-9">
@@ -242,6 +261,45 @@
         });
     });
 
+    $(document).ready(function(){
+        function readURL(input)
+        {
+            if(input.files && input.files[0])
+            {
+                var reader = new FileReader();
+                reader.onload = function(e)
+                {
+                    $('#old_video').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $('#video_upload').change(function(){
+
+            var img_name = $(this).val();
+
+            if(img_name != '' && img_name != null)
+            {
+                var img_arr = img_name.split('.');
+
+                var ext = img_arr.pop();
+                ext = ext.toLowerCase();
+                // alert(ext); return false;
+
+                if(ext == 'mp4' || ext == 'mov' || ext == 'mkv')
+                {
+                    input = document.getElementById('video_upload');
+
+                    readURL(this);
+                }
+            } else{
+
+                $(this).val('');
+                alert('Please select an image of .mp4, .mkv, .mov file format.');
+            }
+        });
+    });
 
 $("body").on('click', '.add_pack', function(){
 		var lengt = $('.pack_info').length;

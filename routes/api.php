@@ -33,6 +33,10 @@ Route::group(['prefix'=>'chef'],function(){
 
 
 Route::post('/chef/listing', [CommonController::class, 'chef_listing']);
+Route::post('/dish/listing', [CommonController::class, 'dish_listing']);
+Route::get('/dish/{dish_id}', [CommonController::class, 'dish_details']);
+
+
 
 Route::group(['prefix'=>'user'],function(){
 	Route::post('/login', [ApiController::class, 'user_login']);
