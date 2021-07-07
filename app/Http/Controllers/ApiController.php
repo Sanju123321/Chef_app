@@ -115,11 +115,11 @@ class ApiController extends Controller
             $add_user->password                 = str_replace("$2y$", "$2a$", $hash_password);
             $add_user->status                   = 'active';
             $add_user->description              = isset($data['description']) ? $data['description'] : '';
-            $add->country_code                  = $data['country_code'];
-            $add->address                       = $data['address'];
-            $add->city                          = $data['city'];
-            $add->state                         = $data['state'];
-            $add->country                       = $data['country'];
+            $add_user->country_code             = $data['country_code'];
+            $add_user->address                  = $data['address'];
+            $add_user->city                     = $data['city'];
+            $add_user->state                    = $data['state'];
+            $add_user->country                  = $data['country'];
 
         if ($add_user->save()) {
             return response()->json(['success' => true, 'data' => $add_user], Response::HTTP_OK);

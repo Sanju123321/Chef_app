@@ -160,44 +160,43 @@
 			                        </div>
 	                            </div>
                    
-						<!-- <div class="packing_content items_prices pck_unit_div">
-							<div class="row">
-								<div class="col-lg-4">
-									<p class="com_red text-right mb-0">
-										<a href="javascript:;" class="add_pack">
-											<i class="fa fa-plus"></i> Add packing unit
-										</a>
-									</p>
-								</div> 
-								<div class="pack_inr_div appendPacking">
-									<div class="pack_info">
-										<div class="row">
-											<div class="col-lg-6">
-												<h5 class="chart_head mb-2">Content</h5>
-												<div class="row">
-													<div class="col-lg-6">
-														<div class="form-group">
-															<input type="text" name="packing_append_div[0][content_number]" id="content_number0" class="form-control content_number">
-									
+						<!-- 		<div class="packing_content items_prices pck_unit_div">
+									<div class="row">
+										<div class="col-lg-3">
+											<p class="com_red text-right mb-0">
+												<a href="javascript:;" class="add_pack">
+													<i class="fa fa-plus"></i> Add packing unit
+												</a>
+											</p>
+										</div> 				
+									</div>
+								</div>	
+								<div class="form-group">
+									<div class="pack_inr_div appendPacking">
+										<label class="col-md-3 control-label">Ingredient</label>
+										<div class="pack_info">
+											<div class="row">
+												<div class="col-lg-6 append_ingredient">
+													<h5 class="chart_head mb-2"></h5>
+													<div class="row ingrentient_length">
+														<div class="col-lg-4">
+															<div class="form-group">
+																<input type="text" name="ingredient[0][name]" id="content_number0" placeholder="Name" value="" class="form-control content_number">
+										
+															</div>
 														</div>
-													</div>
-													<div class="col-lg-6">
-														<div class="form-group">
-														<input type="text" name="packing_append_div[0][content_number]" id="content_number0" class="form-control content_number">
-												
+														<div class="col-lg-4">
+															<div class="form-group">
+															<input type="text" name="ingredient[0][quantity]" id="content_number0" placeholder="Quantity" value="" class="form-control content_number">
+													
+															</div>
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</div>					
-							</div>
-						</div>	 -->	
-				<!-- 			<input type="hidden" name="ingredient_name[]" value="sugar">
-							<input type="hidden" name="quantity[]" value="12gm">
-							<input type="hidden" name="ingredient_name[]" value="salt">
-							<input type="hidden" name="quantity[]" value="34gm"> -->
+									</div>		
+								</div> -->
 
 								<div class="form-actions top">
 									<div class="row">
@@ -301,85 +300,15 @@
         });
     });
 
-$("body").on('click', '.add_pack', function(){
-		var lengt = $('.pack_info').length;
-		// alert(lengt);
-		var ids=[];
-		var packing_unit_Id =$('.content_unit').val();
-		var sellingId =$('.selling_unit_item').val();
-
-		if($('.packing_chck').prop("checked")==false){
-			swal('Please enable product packed in different shapes');
-		}else if (contentnumbers!="" && contentnumbers!=null && lastSelOptnVal!="" && lastSelOptnVal!=null) {
-			var selected = [];
-			$('.content_unit  option:selected').each(function() {
-				var value = $(this).val();
-				if(value!=''){
-					selected.push(value);
-				}
-			});
-
-			$.ajax({
-				url: "{{url('provider/product/new_packng_unit/add')}}",
-				type:'post',
-				data: {'selected': selected,'sellingId':sellingId},
-				success:function packingUnit(response){
-					
-					option_html=response.view;
-					if (response.sellingUnitCount==0) {
-						swal('Sorry, no any lower selling unit');
-					}else{
-						$('.rem_pack').hide();
-						$('.content_number').prop('readonly', true);
-						// $('.content_unit').prop('disabled', true);
-						$('.content_unit').attr("style", "pointer-events: none;");
-						$('.appendPacking').append(' <div class="pack_info"> <div class="row"> <div class="col-lg-6"> <h5 class="chart_head mb-2">Each</h5> <div class="form-group"> <input type="text"  name="packing_append_div['+lengt+'][each_content_unit]" class="form-control each_content_unit" value="'+lastSelOptn+'" readonly="" placeholder="select unit"><input type="hidden" name="packing_append_div['+lengt+'][each_content_unit_id]" value="'+lastSelOptnVal+'" /> </div></div><div class="col-lg-6"> <h5 class="chart_head mb-2">Content</h5> <div class="row"> <div class="col-lg-6"> <div class="form-group"> <input type="text" id="content_number'+lengt+'" name="packing_append_div['+lengt+'][content_number]" class="form-control content_number"> </div></div><div class="col-lg-6"> <div class="form-group"> <select class="form-control packingIdd content_unit renderUnit" id="content_unit'+lengt+'" name="packing_append_div['+lengt+'][content_unit_id]"> '+option_html+' </select> </div></div></div></div></div><p class="text-right mb-0"> <a href="javascript:;" class="rem_pack"> <i class="fa fa-times"></i> Remove </a> </p></div>');
-
-						$("input[id^=content_number").each(function(){
-							$(this).rules("add", {
-								// required: true,
-								required: {
-									depends: function(element) {
-										if ($(element).closest('.pck_unit_div').find('input[type=checkbox]').is(':checked')) {
-											return true;
-										}else{
-											return false;
-										}
-									}
-								},
-								number:true,
-								min:0,
-								messages: {
-									required: "please enter content number",
-								}
-							});   
-						});
-
-						$("input[id^=content_unit").each(function(){
-							$(this).rules("add", {
-								required: true,
-								messages: {
-									required: "please select content unit",
-								}
-							});   
-						});
-
-					}
-				},error(){
-					
-				}
-			});
-		
-				
-		}else{
-			swal('Please fill all the fields');
-		}                       
+	$("body").on('click', '.add_pack', function(){
+		var lengt = $('.ingrentient_length').length;
+		$('.append_ingredient').append('<div class="row ingrentient_length"><div class="col-lg-4"><div class="form-group"> <input type="text" name="ingredient['+lengt+'][name]" value="" id="content_number0" placeholder="Name" class="form-control content_number"></div></div><div class="col-lg-4"><div class="form-group"> <input type="text" name="ingredient['+lengt+'][quantity]" value="" id="content_number0" placeholder="Quantity" class="form-control content_number"></div></div><div class="col-lg-4"> <a class="remove_ingredient" ><span class="fa fa-minus" style="margin: 10px;"></span></a></div></div>');
 	});
 
-$(document).on('click', '.remove-field', function(e) {
-  $(this).parent('.remove').remove();
-  e.preventDefault();
-});
+	$("body").on('click','.remove_ingredient',function(){
+		$(this).closest('div .ingrentient_length').remove();
+	});
+
 </script>
 
 
