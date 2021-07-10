@@ -24,7 +24,7 @@
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
-						<a href="#">Dishes</a>
+						<a href="#">Manage Dishes</a>
 					</li>
 				</ul>
 	
@@ -47,7 +47,6 @@
 										<tr>
 											<th>Name</th>
 											<th>Image</th>
-											<th>Chef Name</th>
 											<th>Price</th>
 											<th>Time Taken</th>
 											<th>Action</th>
@@ -67,10 +66,10 @@
 													// dd($image);
 												?>
 												<td><img src="{{ @$image }}" height="123" width="137"></td>
-												<td>{{ $dish['chef_name']['full_name'] }}</td>	
 												<td>{{ $dish['price'] }}</td>	
 												<td>{{ $dish['time_taken'] }}</td>	
 												<td>
+													<a href="{{ url('admin/chef/dish/edit/'.$dish['id']) }}" class="" title="Edit"><i class="fa fa-edit"></i></a>
 													<a href="{{ url('admin/chef/dish/delete/'.$dish['id']) }}" class="del_btn" title="Delete"><i class="fa fa-trash"></i></a>
 												</td>
 										</tr>

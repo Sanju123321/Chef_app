@@ -1,12 +1,12 @@
 <?php
 
-	if(isset($dish)){	
-		$action = url('admin/dish/edit/'.$id);
+	if(isset($dish_id)){	
+		$action = url('admin/chef/dish/edit/'.$dish_id);
 		$task = "Edit";
 		$disabled = 'disabled';
 	}
 	else{	
-		$action = url('admin/dish/add');
+		$action = url('admin/chef/dish/dish-add/'.$chef_id);
 		$task = "Add";
 	}
 ?>
@@ -42,10 +42,15 @@
 			Manage Dish </h3>
 
 			<div class="page-bar">
-				<ul class="page-breadcrumb">
+				<ul class="page-breadcrumb">   
+
 					<li>
 						<i class="fa fa-bars"></i>
-						<a href="{{ url('admin/dish') }}">Manage Dish</a>
+						<a href="{{ url('admin/chef') }}">Chefs</a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+					<li>
+						<a href="{{ url('admin/chef/dish/'.@$chef_id) }}">Manage Dishes</a>
 						<i class="fa fa-angle-right"></i>
 					</li>
 					<li>
@@ -89,7 +94,7 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label">Image :</label>
 									<div class="col-md-3 p-l-15 ">
-										<img src="{{$image}}" width="80%" height="100%" id="old_image" alt="No image" >
+										<img src="{{$image}}" width="240" height="240" id="old_image" alt="No image" >
 									</div>
 								</div>
 								
@@ -111,9 +116,9 @@
 								<div class="form-group">
 									<label class="col-md-3 control-label">Video :</label>
 									<div class="col-md-3 p-l-15 ">
-										<!-- <video width="320" height="240" controls id="old_video" src=""> -->
-										  <!-- Your browser does not support the video tag. -->
-										<!-- </video> -->
+										<video width="320" height="240" controls id="old_video" src="{{ $video }}">
+										  Your browser does not support the video tag.
+										</video>
 									</div>
 								</div>
 								
@@ -138,7 +143,7 @@
 									<div class="form-group">
 										<label class="col-md-3 control-label">Price  :</label>
 										<div class="col-md-6">
-											<input type="number" name="price" class="form-control" placeholder="Enter Phone Number" value="{{ isset($dish->phone_number)?$dish->phone_number:'' }}" required="required" />
+											<input type="number" name="price" class="form-control" placeholder="Enter Phone Number" value="{{ isset($dish->price)?$dish->price:'' }}" required="required" />
 										</div>
 									</div>
 								</div>	
@@ -154,13 +159,24 @@
 									<label class="col-md-3 control-label">Dish Status :</label>
 	                                <div class="col-md-6">
 		                                <select name="status" class="form-control">
-		                                    <option value="Active" <?php if(@$dish->status == "Active"){ echo 'selected';} ?> >Active</option>
-		                                    <option value="INActive" <?php if(@$dish->status == "INActive"){ echo 'selected';} ?>>Inactive</option>
+		                                    <option value="Active" <?php if(@$dish['status'] == "Active"){ echo 'selected';} ?> >Active</option>
+		                                    <option value="INActive" <?php if(@$dish['status'] == "INActive"){ echo 'selected';} ?>>Inactive</option>
+		                                </select>
+			                        </div>
+	                            </div>
+
+	                           	<div class="form-group">
+									<label class="col-md-3 control-label">Category Type :</label>
+	                                <div class="col-md-6">
+		                                <select name="category" class="form-control">
+		                                    <option value="breakfast" <?php if(@$dish['category'] == "breakfast"){ echo 'selected';} ?> >Breakfast</option>
+		                                    <option value="lunch" <?php if(@$dish['category'] == "lunch"){ echo 'selected';} ?>>Lunch</option>
+		                                    <option value="dinner" <?php if(@$dish['category'] == "dinner"){ echo 'selected';} ?>>Dinner</option>
 		                                </select>
 			                        </div>
 	                            </div>
                    
-						<!-- 		<div class="packing_content items_prices pck_unit_div">
+								<div class="packing_content items_prices pck_unit_div">
 									<div class="row">
 										<div class="col-lg-3">
 											<p class="com_red text-right mb-0">
@@ -177,34 +193,84 @@
 										<div class="pack_info">
 											<div class="row">
 												<div class="col-lg-6 append_ingredient">
-													<h5 class="chart_head mb-2"></h5>
-													<div class="row ingrentient_length">
-														<div class="col-lg-4">
-															<div class="form-group">
-																<input type="text" name="ingredient[0][name]" id="content_number0" placeholder="Name" value="" class="form-control content_number">
-										
+														@if(@count($dish['dish_ingredients']) > 0 )
+															@foreach($dish['dish_ingredients'] as $key=>$ingredients_list)
+																<div class="row ingrentient_length">
+																	<div class="main_ingredient-div">
+																		<div class="col-lg-3">
+																			<div class="form-group">
+																				<input type="text" name="ingredient[{{$key}}][name]" id="ingredient_name" placeholder="Name" value="{{ $ingredients_list['ingredient_name'] }}" class="form-control content_number" required="required">
+																			</div>
+																		</div>
+																		<div class="col-lg-2">
+																			<div class="form-group">
+																			<input type="text" name="ingredient[{{$key}}][quantity]" id="ingredient_quantity" placeholder="Quantity" value="{{ $ingredients_list['quantity'] }}" class="form-control content_number" required="required">
+																			</div>
+																		</div>
+																		<div class="col-lg-2">
+																			<div class="form-group">
+																				<select name="ingredient[{{$key}}][units]"  class="form-control">
+																					<option <?php if(@$ingredients_list->units == "gm"){ echo 'selected';} ?> value="gm">Gm</option>
+																					<option <?php if(@$ingredients_list->units == "mg"){ echo 'selected';} ?> value="mg">Mg</option>
+																					<option <?php if(@$ingredients_list->units == "kg"){ echo 'selected';} ?> value="kg">Kg</option>
+																					<option <?php if(@$ingredients_list->units == "pound"){ echo 'selected';} ?> value="pound">Pound</option>
+																				</select>
+																			</div>
+																		</div>
+																		<div class="col-lg-2">
+																			<div class="form-group" style="margin-top:6px;">
+																				  	<input type="checkbox" id="is_required" name="ingredient[{{$key}}][required]" value="1" <?php if(@$ingredients_list->required == "1"){ echo 'checked';} ?> ><label for="is_required"> Required</label>
+																			</div>
+																		</div>	
+																	</div>
+																</div>	
+															@endforeach
+														@else
+														<div class="row ingrentient_length">
+															<div class="main_ingredient-div">					<div class="col-lg-3">
+																	<div class="form-group">
+																		<input type="text" name="ingredient[0][name]" id="ingredient_name" placeholder="Name" value="" class="form-control content_number" required="required">
+																	</div>
+																</div>
+																<div class="col-lg-2">
+																	<div class="form-group">
+																	<input type="text" name="ingredient[0][quantity]" id="ingredient_quantity" placeholder="Quantity" value="" class="form-control content_number" required="required">
+																	</div>
+																</div>
+																<div class="col-lg-2">
+																	<div class="form-group">
+																		<select name="ingredient[0][units]"  class="form-control">
+																			<option value="gm">Gm</option>
+																			<option value="mg">Mg</option>
+																			<option value="kg">Kg</option>
+																			<option value="pound">Pound</option>
+																		</select>
+																	</div>
+																</div>
+																<div class="col-lg-2">
+																	<div class="form-group" style="margin-top:6px;">
+																		<input type="checkbox" id="is_required" name="ingredient[0][required]" value="1"><label for="is_required"> Required</label>
+																	</div>
+																</div>
 															</div>
 														</div>
-														<div class="col-lg-4">
-															<div class="form-group">
-															<input type="text" name="ingredient[0][quantity]" id="content_number0" placeholder="Quantity" value="" class="form-control content_number">
-													
-															</div>
-														</div>
-													</div>
+														@endif
 												</div>
 											</div>
 										</div>
 									</div>		
-								</div> -->
+								</div>
 
 								<div class="form-actions top">
 									<div class="row">
 										<div class="col-md-offset-3 col-md-9">
 											{{ csrf_field() }}
 											<input type="hidden" name="user_id" value="{{ @$user_id }}" id="user_id">
+											<input type="hidden" name="dish_id" value="{{ @$dish_id }}" id="user_id">
+											<input type="hidden" name="chef_id" value="{{ @$dish['chef_id'] }}" id="user_id">
 											<button type="submit" name="button" class="btn green">Submit</button>
-											<a href="{{ url('admin/users') }}"><button class="btn btn-default m-l-10" type="button" name="cancel">Cancel </button></a>
+
+											<!-- <a href="{{ url('admin/users') }}"><button class="btn btn-default m-l-10" type="button" name="cancel">Cancel </button></a> -->
 										</div>
 									</div>
 								</div>
@@ -275,25 +341,17 @@
         }
 
         $('#video_upload').change(function(){
-
             var img_name = $(this).val();
-
-            if(img_name != '' && img_name != null)
-            {
+            if(img_name != '' && img_name != null){
                 var img_arr = img_name.split('.');
-
                 var ext = img_arr.pop();
                 ext = ext.toLowerCase();
-                // alert(ext); return false;
-
                 if(ext == 'mp4' || ext == 'mov' || ext == 'mkv')
                 {
                     input = document.getElementById('video_upload');
-
                     readURL(this);
                 }
             } else{
-
                 $(this).val('');
                 alert('Please select an image of .mp4, .mkv, .mov file format.');
             }
@@ -302,7 +360,7 @@
 
 	$("body").on('click', '.add_pack', function(){
 		var lengt = $('.ingrentient_length').length;
-		$('.append_ingredient').append('<div class="row ingrentient_length"><div class="col-lg-4"><div class="form-group"> <input type="text" name="ingredient['+lengt+'][name]" value="" id="content_number0" placeholder="Name" class="form-control content_number"></div></div><div class="col-lg-4"><div class="form-group"> <input type="text" name="ingredient['+lengt+'][quantity]" value="" id="content_number0" placeholder="Quantity" class="form-control content_number"></div></div><div class="col-lg-4"> <a class="remove_ingredient" ><span class="fa fa-minus" style="margin: 10px;"></span></a></div></div>');
+		$('.append_ingredient').append('<div class="row ingrentient_length"><div class="main_ingredient-div"><div class="col-lg-1"> <a class="remove_ingredient" ><span class="fa fa-minus" style="margin: 10px;"></span></a></div><div class="col-lg-3"><div class="form-group"> <input type="text" name="ingredient['+lengt+'][name]" id="ingredient_name_'+lengt+'" placeholder="Name" value="" class="form-control content_number" required="required"></div></div><div class="col-lg-2"><div class="form-group"> <input type="text" name="ingredient['+lengt+'][quantity]" id="ingredient_quantity_'+lengt+'" placeholder="Quantity" value="" class="form-control content_number" required="required"></div></div><div class="col-lg-2"><div class="form-group"> <select name="ingredient['+lengt+'][units]" class="form-control"><option value="gm">Gm</option><option value="mg">Mg</option><option value="kg">Kg</option><option value="pound">Pound</option> </select></div></div><div class="col-lg-2"><div class="form-group" style="margin-top:6px;">&nbsp;<input type="checkbox" id="is_required" name="ingredient['+lengt+'][required]" value="1"> <label for="is_required_'+lengt+'"> Required</label></div></div></div></div></div>');
 	});
 
 	$("body").on('click','.remove_ingredient',function(){

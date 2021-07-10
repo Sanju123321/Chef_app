@@ -58,10 +58,11 @@ Route::group(['prefix'=>'admin', 'middleware'=>'CheckAdminAuth'],function(){
 	//Manage Dish
 	Route::match(['get','post'],'/chef/dish/{chef_id}',[DishController::class, 'index']);
 	Route::match(['get','post'],'/chef/dish-add/{chef_id}',[DishController::class, 'add']);
-	Route::match(['get','post'],'/chef/dish/delete/{id}',[DishController::class, 'delete']);
+	Route::match(['get','post'],'/chef/dish/edit/{dish_id}',[DishController::class, 'edit']);
+	Route::match(['get','post'],'/chef/dish/delete/{dish_id}',[DishController::class, 'delete']);
 
 
-	Route::match(['get','post'],'/dish/edit/{id}',[DishController::class, 'edit']);
+	// Route::match(['get','post'],'/dish/edit/{id}',[DishController::class, 'edit']);
 
 });
 
