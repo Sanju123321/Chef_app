@@ -363,14 +363,22 @@ class ApiController extends Controller
         return response()->json(['success' => true, 'data' => $user], 200);
     }
 
-    public function Chef_updateProfile(Request $request)
+    public function user_update_profile(Request $request)
     {
         $data = $request->all();
         $validator = Validator::make(
             $request->all(),
             [
-                'first_name' => 'required',
-                'mobile_number' => 'required|numeric'
+                'full_name'          => 'required',
+                'name'               => 'required',          
+                'phone_number'       => 'required',           
+                'gender'             => 'required',
+                'email'              => 'required|email',
+                'country_code'       => 'required',
+                'address'            => 'required',
+                'city'               => 'required',
+                'state'              => 'required',
+                'country'            => 'required'
             ]
         );
 
@@ -378,10 +386,27 @@ class ApiController extends Controller
             return response()->json(['error' => $validator->errors()], 200);
         }
 
-        $user_id = Auth('chef-api')::User()->id;
-        $update_profile =  User::where('id',$user_id)->first();
-        $update_profile->first_name         = $data['first_name'];
-        $update_profile->mobile_number      = $data['mobile_number'];
+        $user_id                                  = auth()->userOrFail();
+        $update_profile                           = User::where('id',$user_id['id'])->first();
+        $update_profile->full_name                = $data['full_name'];          
+        $update_profile->name                     = $data['name'];          
+        $update_profile->phone_number             = $data['phone_number'];           
+        $update_profile->gender                   = $data['gender'];           
+        $update_profile->email                    = $data['email']; 
+        $update_profile->country_code             = $data['country_code'];
+        $update_profile->address                  = $data['address'];
+        $update_profile->city                     = $data['city'];
+        $update_profile->state                    = $data['state'];
+        $update_profile->country                  = $data['country'];
+        if(!empty($data['profile_image'])){
+            if(!empty($_FILES['profile_image']['name'])){
+                $fileName = time() . '.' . $request->profile_image->extension();
+                $base_url = url('images/Chef');
+                $request->profile_image->move(public_path('images/Chef'), $fileName);
+                $update_profile->image = $base_url.'/'.$fileName;
+            }
+        }
+
         if ($update_profile->save()) {
             return response()->json(['success' => true, 'data' => 'User Profile Updated Successfully.'], Response::HTTP_OK);
         }else{
@@ -389,6 +414,58 @@ class ApiController extends Controller
         }
 
     }
+
+    // public function chef_update_profile(Request $request){
+    //     $data = $request->all();
+    //     $validator = Validator::make(
+    //         $request->all(),
+    //         [
+    //             'full_name'             => 'required',
+    //             'business_name'         => 'required',
+    //             'country_code'          => 'required',
+    //             'phone_number'          => 'required',
+    //             'email'                 => 'required|email',
+    //             'gender'                => 'required',
+    //             'dob'                   => 'required',
+    //             'years_of_experience'   => 'required',
+    //             'street_name'           => 'required',
+    //             'city'                  => 'required',
+    //             'state'                 => 'required',
+    //             'country'               => 'required'
+    //         ]
+    //     );
+
+    //     if ($validator->fails()) {
+    //         return response()->json(['error' => $validator->errors()], 200);
+    //     }
+
+    //     $user_id                                  = auth()->userOrFail();
+    //     $update_profile                           = User::where('id',$user_id['id'])->first();
+    //     $update_profile->full_name                = $data['full_name'];          
+    //     $update_profile->name                     = $data['name'];          
+    //     $update_profile->phone_number             = $data['phone_number'];           
+    //     $update_profile->gender                   = $data['gender'];           
+    //     $update_profile->email                    = $data['email']; 
+    //     $update_profile->country_code             = $data['country_code'];
+    //     $update_profile->address                  = $data['address'];
+    //     $update_profile->city                     = $data['city'];
+    //     $update_profile->state                    = $data['state'];
+    //     $update_profile->country                  = $data['country'];
+    //     if(!empty($data['profile_image'])){
+    //         if(!empty($_FILES['profile_image']['name'])){
+    //             $fileName = time() . '.' . $request->profile_image->extension();
+    //             $base_url = url('images/Chef');
+    //             $request->profile_image->move(public_path('images/Chef'), $fileName);
+    //             $update_profile->image = $base_url.'/'.$fileName;
+    //         }
+    //     }
+
+    //     if ($update_profile->save()) {
+    //         return response()->json(['success' => true, 'data' => 'User Profile Updated Successfully.'], Response::HTTP_OK);
+    //     }else{
+    //          return response()->json(['error' => 'Something went wrong, Please try again later.']);
+    //     }        
+    // }
 
  
     public function Chef_logout(Request $request)

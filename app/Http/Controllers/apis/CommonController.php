@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Chef;
 use App\Models\Dish;
+use App\Models\Country;
 use App\Models\Admin;
 use Mail, Hash, Auth;
 
@@ -45,5 +46,13 @@ class CommonController extends Controller
         $resp['data']   =   $dish_list;
         return $resp;
 
+    }
+
+    public function country_list(Request $request){
+        $country_list = country::get()->toArray();
+        $resp['status'] =   'true';
+        $resp['msg']    =   'Country List';
+        $resp['data']   =   $country_list;
+        return $resp;
     }
 }

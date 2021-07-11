@@ -144,7 +144,12 @@
 									<div class="form-group">
 										<label class="col-md-3 control-label">Country  :</label>
 										<div class="col-md-6">
-											<input type="text" name="country" class="form-control" placeholder="Enter Country" value="{{ isset($user->country)?$user->country:'' }}" required="required" />
+											<select name="country" class="form-control">
+												<option selected disabled>Select Country Code</option>
+												@foreach($countries as $country)
+													<option value="{{ $country['id'] }}" <?php if($country['id'] == @$user['country']){ echo "selected"; } ?>>{{ $country['country_name'] }}</option>
+												@endforeach
+											</select>
 										</div>
 									</div>
 								</div>

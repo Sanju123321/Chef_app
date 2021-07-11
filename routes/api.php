@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\apis\CommonController;
+use App\Http\Controllers\apis\ChefController;
 
 
 /*
@@ -26,12 +27,23 @@ Route::group(['prefix'=>'chef'],function(){
 	Route::post('/logout',[ApiController::class, 'chef_logout']); 
 	Route::post('/register', [ApiController::class, 'chef_registration']);
 	Route::post('/get-profile',[ApiController::class, 'chef_profile']); 
+	Route::post('/update-profile',[ApiController::class, 'chef_update_profile']); 
+
+
+	// ------------ Add dishes ---------------------------
+	Route::post('/add-dish',[ChefController::class, 'add_dish']); 
+	Route::post('/edit-dish',[ChefController::class, 'edit_dish']); 
+	Route::post('/delete-dish',[ChefController::class, 'delete_dish']); 
+
+	// ------------ Add dishes ---------------------------
+
 });
 
 
 
 
 
+Route::get('/country-list', [CommonController::class, 'country_list']);
 Route::post('/chef/listing', [CommonController::class, 'chef_listing']);
 Route::post('/dish/listing', [CommonController::class, 'dish_listing']);
 Route::get('/dish/{dish_id}', [CommonController::class, 'dish_details']);
@@ -45,4 +57,5 @@ Route::group(['prefix'=>'user'],function(){
 	Route::post('/reset-password',[ApiController::class, 'user_reset_password']); 
 	Route::post('/logout',[ApiController::class, 'user_logout']); 
 	Route::post('/get-profile',[ApiController::class, 'user_profile']); 
+	Route::post('/update-profile',[ApiController::class, 'user_update_profile']); 
 });
