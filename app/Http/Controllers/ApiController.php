@@ -40,12 +40,12 @@ class ApiController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 200);
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
         $check_email_exists = Chef::where('email', $data['email'])->first();
         if (!empty($check_email_exists)) {
-            return response()->json(['error' => 'This Email is already exists.'], 200);
+            return response()->json(['error' => 'This Email is already exists.'], 400);
         }
 
 
@@ -98,11 +98,11 @@ class ApiController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 200);
+            return response()->json(['error' => $validator->errors()], 400);
         }
         $check_email_exists = User::where('email', $data['email'])->first();
         if (!empty($check_email_exists)) {
-            return response()->json(['error' => 'This Email is already exists.'], 200);
+            return response()->json(['error' => 'This Email is already exists.'], 400);
         }
 
             $add_user                           = new User;
@@ -142,7 +142,7 @@ class ApiController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 200);
+            return response()->json(['error' => $validator->errors()], 400);
         }
         $token = Auth('chef-api')->attempt($credentials);
         if ($token ) {
@@ -166,7 +166,7 @@ class ApiController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 200);
+            return response()->json(['error' => $validator->errors()], 400);
         }
         $token = auth()->attempt($credentials);
         if ($token ) {
@@ -188,13 +188,13 @@ class ApiController extends Controller
 
         if ($validator->fails()) {
 
-            return response()->json(['error' => $validator->errors()], 200);
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
 
         $check_email_exists = Chef::where('email', $request['email'])->first();
         if (empty($check_email_exists)) {
-            return response()->json(['error' => 'Email not exists.'], 200);
+            return response()->json(['error' => 'Email not exists.'], 400);
         }
 
 
@@ -228,13 +228,13 @@ class ApiController extends Controller
 
         if ($validator->fails()) {
 
-            return response()->json(['error' => $validator->errors()], 200);
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
 
         $check_email_exists = User::where('email', $request['email'])->first();
         if (empty($check_email_exists)) {
-            return response()->json(['error' => 'Email not exists.'], 200);
+            return response()->json(['error' => 'Email not exists.'], 400);
         }
 
 
@@ -270,7 +270,7 @@ class ApiController extends Controller
 
         if ($validator->fails()) {
 
-            return response()->json(['error' => $validator->errors()], 200);
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
 
@@ -312,7 +312,7 @@ class ApiController extends Controller
 
         if ($validator->fails()) {
 
-            return response()->json(['error' => $validator->errors()], 200);
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
 
@@ -345,7 +345,7 @@ class ApiController extends Controller
         try {
             $user = Auth('chef-api')->userOrFail();
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
-            return response()->json(['error' => $e->getMessage()], 200);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
 
         return response()->json(['success' => true, 'data' => $user], 200);
@@ -357,7 +357,7 @@ class ApiController extends Controller
         try {
             $user = auth()->userOrFail();
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
-            return response()->json(['error' => $e->getMessage()], 200);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
 
         return response()->json(['success' => true, 'data' => $user], 200);
@@ -383,14 +383,14 @@ class ApiController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 200);
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
 
         $user_id                                  = auth()->userOrFail();
         $check_email_exists = User::where('id','<>',$user_id['id'])->where('email', $data['email'])->first();
         if (!empty($check_email_exists)) {
-            return response()->json(['error' => 'This Email is already exists.'], 200);
+            return response()->json(['error' => 'This Email is already exists.'], 400);
         }
         $update_profile                           = User::where('id',$user_id['id'])->first();
         $update_profile->full_name                = $data['full_name'];          
@@ -441,13 +441,13 @@ class ApiController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 200);
+            return response()->json(['error' => $validator->errors()], 400);
         }
 
         $chef_id                                      = Auth('chef-api')->userOrFail();
         $check_email_exists = User::where('id','<>',$chef_id['id'])->where('email', $data['email'])->first();
         if (!empty($check_email_exists)) {
-            return response()->json(['error' => 'This Email is already exists.'], 200);
+            return response()->json(['error' => 'This Email is already exists.'], 400);
         }
         $update_profile                               = Chef::where('id',$chef_id['id'])->first();
         $update_profile->full_name                    = $data['full_name'];
