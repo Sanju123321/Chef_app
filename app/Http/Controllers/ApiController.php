@@ -386,7 +386,12 @@ class ApiController extends Controller
             return response()->json(['error' => $validator->errors()], 200);
         }
 
+
         $user_id                                  = auth()->userOrFail();
+        $check_email_exists = User::where('id','<>',$user_id['id'])->where('email', $data['email'])->first();
+        if (!empty($check_email_exists)) {
+            return response()->json(['error' => 'This Email is already exists.'], 200);
+        }
         $update_profile                           = User::where('id',$user_id['id'])->first();
         $update_profile->full_name                = $data['full_name'];          
         $update_profile->name                     = $data['name'];          
@@ -415,57 +420,67 @@ class ApiController extends Controller
 
     }
 
-    // public function chef_update_profile(Request $request){
-    //     $data = $request->all();
-    //     $validator = Validator::make(
-    //         $request->all(),
-    //         [
-    //             'full_name'             => 'required',
-    //             'business_name'         => 'required',
-    //             'country_code'          => 'required',
-    //             'phone_number'          => 'required',
-    //             'email'                 => 'required|email',
-    //             'gender'                => 'required',
-    //             'dob'                   => 'required',
-    //             'years_of_experience'   => 'required',
-    //             'street_name'           => 'required',
-    //             'city'                  => 'required',
-    //             'state'                 => 'required',
-    //             'country'               => 'required'
-    //         ]
-    //     );
+    public function chef_update_profile(Request $request){
+        $data = $request->all();
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'full_name'             => 'required',
+                'business_name'         => 'required',
+                'country_code'          => 'required',
+                'phone_number'          => 'required',
+                'email'                 => 'required|email',
+                'gender'                => 'required',
+                'dob'                   => 'required',
+                'years_of_experience'   => 'required',
+                'street_name'           => 'required',
+                'city'                  => 'required',
+                'state'                 => 'required',
+                'country'               => 'required'
+            ]
+        );
 
-    //     if ($validator->fails()) {
-    //         return response()->json(['error' => $validator->errors()], 200);
-    //     }
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 200);
+        }
 
-    //     $user_id                                  = auth()->userOrFail();
-    //     $update_profile                           = User::where('id',$user_id['id'])->first();
-    //     $update_profile->full_name                = $data['full_name'];          
-    //     $update_profile->name                     = $data['name'];          
-    //     $update_profile->phone_number             = $data['phone_number'];           
-    //     $update_profile->gender                   = $data['gender'];           
-    //     $update_profile->email                    = $data['email']; 
-    //     $update_profile->country_code             = $data['country_code'];
-    //     $update_profile->address                  = $data['address'];
-    //     $update_profile->city                     = $data['city'];
-    //     $update_profile->state                    = $data['state'];
-    //     $update_profile->country                  = $data['country'];
-    //     if(!empty($data['profile_image'])){
-    //         if(!empty($_FILES['profile_image']['name'])){
-    //             $fileName = time() . '.' . $request->profile_image->extension();
-    //             $base_url = url('images/Chef');
-    //             $request->profile_image->move(public_path('images/Chef'), $fileName);
-    //             $update_profile->image = $base_url.'/'.$fileName;
-    //         }
-    //     }
+        $chef_id                                      = Auth('chef-api')->userOrFail();
+        $check_email_exists = User::where('id','<>',$chef_id['id'])->where('email', $data['email'])->first();
+        if (!empty($check_email_exists)) {
+            return response()->json(['error' => 'This Email is already exists.'], 200);
+        }
+        $update_profile                               = Chef::where('id',$chef_id['id'])->first();
+        $update_profile->full_name                    = $data['full_name'];
+        $update_profile->business_name                = $data['business_name'];
+        $update_profile->country_code                 = $data['country_code'];
+        $update_profile->phone_number                 = $data['phone_number'];
+        $update_profile->email                        = $data['email'];
+        $update_profile->gender                       = $data['gender'];
+        $update_profile->dob                          = date('Y-m-d',strtotime($data['dob']));
+        $update_profile->years_of_experience          = $data['years_of_experience'];
+        $update_profile->street_name                  = $data['street_name'];
+        $update_profile->city                         = $data['city'];
+        $update_profile->state                        = $data['state'];
+        $update_profile->country                      = $data['country'];
+        $update_profile->status                       = 'Active';
+        $update_profile->alternative_country_code     = isset($data['alternative_country_code']) ? $data['alternative_country_code'] : $update_profile['alternative_country_code'];
+        $update_profile->alternative_phone_number     = isset($data['alternative_phone_number']) ? $data['alternative_phone_number'] : $update_profile['alternative_phone_number'];
+        $update_profile->building_description         = isset($data['building_description']) ? $data['building_description'] : $update_profile['building_description'];
+        if(!empty($data['profile_image'])){
+            if(!empty($_FILES['profile_image']['name'])){
+                $fileName = time() . '.' . $request->profile_image->extension();
+                $base_url = url('images/Chef');
+                $request->profile_image->move(public_path('images/Chef'), $fileName);
+                $update_profile->image = $base_url.'/'.$fileName;
+            }
+        }
 
-    //     if ($update_profile->save()) {
-    //         return response()->json(['success' => true, 'data' => 'User Profile Updated Successfully.'], Response::HTTP_OK);
-    //     }else{
-    //          return response()->json(['error' => 'Something went wrong, Please try again later.']);
-    //     }        
-    // }
+        if ($update_profile->save()) {
+            return response()->json(['success' => true, 'data' => 'User Profile Updated Successfully.'], Response::HTTP_OK);
+        }else{
+             return response()->json(['error' => 'Something went wrong, Please try again later.']);
+        }        
+    }
 
  
     public function Chef_logout(Request $request)
