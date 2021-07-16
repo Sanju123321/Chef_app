@@ -130,4 +130,69 @@ class ChefController extends Controller
         return $resp; 
 
     }
+
+    public function dish_listing(Request $request){
+        $data           = $request->all();
+        $chef           = Auth('chef-api')->userOrFail();
+        $dish_list      = Dish::with('dish_ingredients')->where('chef_id',$chef['id'])->whereNull('deleted_at')->get()->toArray();
+        if(!empty($dish_list)){
+            $resp['status'] = 'true';
+            $resp['msg']    = 'Dish List';
+            $resp['data']   = $dish_list;
+        }else{
+            $resp['status'] = 'false';
+            $resp['msg']    =   'no Record found';   
+        }
+        return $resp; 
+
+    }
+
+    public function dish_searching(Request $request){
+        $data           = $request->all();
+        $search         = $data['search'];
+
+        $chef           = Auth('chef-api')->userOrFail();
+        $dish_search    = Dish::with('dish_ingredients')
+                                    ->where('chef_id',$chef['id'])
+                                    ->where(function($q) use($search) {
+                                        $q->where('name','like','%'.$search.'%')
+                                            ->orWhere('category','like','%'.$search.'%');
+                                    })
+                                    ->whereNull('deleted_at')
+                                    ->get()->toArray();
+        if(!empty($dish_search)){
+            $resp['status'] = 'true';
+            $resp['msg']    = 'Dish search result';
+            $resp['data']   = $dish_search;
+        }else{
+            $resp['status'] = 'false';
+            $resp['msg']    =   'no Record found';   
+        }
+        return $resp; 
+
+    }
+
+    public function dish_sorting(Request $request){
+        $data           = $request->all();
+        $search         = $data['search'];
+
+        $chef           = Auth('chef-api')->userOrFail();
+        $dish_search    = Dish::with('dish_ingredients')
+                                    ->where('chef_id',$chef['id'])
+                                    ->where(function($q) use($search) {
+                                        $q->where('category','like','%'.$search.'%');
+                                    })
+                                    ->whereNull('deleted_at')
+                                    ->get()->toArray();
+        if(!empty($dish_search)){
+            $resp['status'] = 'true';
+            $resp['msg']    = 'Dish sort result';
+            $resp['data']   = $dish_search;
+        }else{
+            $resp['status'] = 'false';
+            $resp['msg']    =   'no Record found';   
+        }
+        return $resp; 
+
+    }
 }

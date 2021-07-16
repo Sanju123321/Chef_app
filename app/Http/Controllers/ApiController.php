@@ -471,7 +471,7 @@ class ApiController extends Controller
                 $fileName = time() . '.' . $request->profile_image->extension();
                 $base_url = url('images/Chef');
                 $request->profile_image->move(public_path('images/Chef'), $fileName);
-                $update_profile->image = $base_url.'/'.$fileName;
+                $update_profile->profile_image = $base_url.'/'.$fileName;
             }
         }
 

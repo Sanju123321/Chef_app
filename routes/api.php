@@ -35,6 +35,10 @@ Route::group(['prefix'=>'chef'],function(){
 	Route::post('/edit-dish',[ChefController::class, 'edit_dish']); 
 	Route::post('/delete-dish',[ChefController::class, 'delete_dish']); 
 
+	Route::post('/dish-list',[ChefController::class, 'dish_listing']);
+	Route::post('/dish-search',[ChefController::class, 'dish_searching']);
+	Route::post('/dish-sorting',[ChefController::class, 'dish_sorting']);
+
 	// ------------ Add dishes ---------------------------
 
 });
