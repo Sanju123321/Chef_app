@@ -8,6 +8,7 @@ use App\Http\Controllers\backEnd\ProfileController;
 use App\Http\Controllers\backEnd\UserManagementController;
 use App\Http\Controllers\backEnd\ChefController;
 use App\Http\Controllers\backEnd\DishController;
+use App\Http\Controllers\backEnd\BannerController;
 
 
 
@@ -60,6 +61,14 @@ Route::group(['prefix'=>'admin', 'middleware'=>'CheckAdminAuth'],function(){
 	Route::match(['get','post'],'/chef/dish-add/{chef_id}',[DishController::class, 'add']);
 	Route::match(['get','post'],'/chef/dish/edit/{dish_id}',[DishController::class, 'edit']);
 	Route::match(['get','post'],'/chef/dish/delete/{dish_id}',[DishController::class, 'delete']);
+
+	//Banner management
+	Route::match(['get','post'],'/banner',[BannerController::class, 'index']);
+	// Route::match(['get','post'],'/banner/add',[BannerController::class, 'add']);
+	Route::match(['get','post'],'/banner/edit/{id}',[BannerController::class, 'edit']);
+	// Route::match(['get','post'],'/banner/delete',[BannerController::class, 'delete']);
+
+
 
 
 	// Route::match(['get','post'],'/dish/edit/{id}',[DishController::class, 'edit']);

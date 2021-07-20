@@ -28,6 +28,15 @@ class CommonController extends Controller
 
     }
 
+    public function chef_details(Request $request, $chef_id){
+        $chef_details   =   Chef::WhereNull('deleted_at')->where('id',$chef_id)->first();
+        $resp['status'] =   'true';
+        $resp['msg']    =   'Chef Details';
+        $resp['data']   =   $chef_details;
+        return $resp;
+
+    }
+
     public function dish_listing(Request $request){
         $dish_list = Dish::with('chefName','dish_ingredients')->WhereNull('deleted_at')->orderby('id','desc')->get()->toArray();
         $resp['status'] =   'true';
@@ -54,5 +63,26 @@ class CommonController extends Controller
         $resp['msg']    =   'Country List';
         $resp['data']   =   $country_list;
         return $resp;
+    }
+
+    public function dish_searching(Request $request){
+        $data           = $request->all();
+        $search         = $data['search'];
+
+        $dish_search    = Dish::with('dish_ingredients')
+                                    ->where(function($q) use($search) {
+                                        $q->where('name','like','%'.$search.'%');
+                                    })
+                                    ->whereNull('deleted_at')
+                                    ->get()->toArray();
+        if(!empty($dish_search)){
+            $resp['status'] = 'true';
+            $resp['msg']    = 'Dish search result';
+            $resp['data']   = $dish_search;
+        }else{
+            $resp['status'] = 'false';
+            $resp['msg']    =   'no Record found';   
+        }
+        return $resp; 
     }
 }
