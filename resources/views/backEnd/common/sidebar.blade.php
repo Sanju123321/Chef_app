@@ -38,7 +38,7 @@
 			?>
 			<li class="start {{ $selected }}">
 				<a href="{{ url('admin/user') }}">
-					<i class="fa fa-home"></i>
+					<i class="fa fa-user"></i>
 					<span class="title">Manage User</span>
 					<span class="selected"></span>
 				</a>
@@ -62,20 +62,20 @@
 
 
 
-<!-- 			<?php
+			<?php
 				$selected = '';
-				if($page == 'dishes'){
+				if($page == 'banner'){
 					$selected = "active";
 				}
 			?>
 			<li class="start {{ $selected }}">
-				<a href="{{ url('admin/dish') }}">
-					<i class="fa fa-home"></i>
-					<span class="title">Manage Dish</span>
+				<a href="{{ url('admin/banner') }}">
+					<i class="fa fa-picture-o" aria-hidden="true"></i>
+					<span class="title">Manage Banner</span>
 					<span class="selected"></span>
 				</a>
 			</li>
- -->
+
 
 
 		</ul>

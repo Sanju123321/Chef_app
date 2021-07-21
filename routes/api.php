@@ -51,10 +51,14 @@ Route::post('/get_list', [ChefController::class, 'get_list']);
 
 
 Route::get('/country-list', [CommonController::class, 'country_list']);
+
 Route::post('/chef/listing', [CommonController::class, 'chef_listing']);
+Route::get('/chef/{chef_id}', [CommonController::class, 'chef_details']);
+
+
 Route::post('/dish/listing', [CommonController::class, 'dish_listing']);
 Route::get('/dish/{dish_id}', [CommonController::class, 'dish_details']);
-
+Route::post('/dish-search',[ChefController::class, 'dish_searching']);
 
 
 Route::group(['prefix'=>'user'],function(){
@@ -64,5 +68,7 @@ Route::group(['prefix'=>'user'],function(){
 	Route::post('/reset-password',[ApiController::class, 'user_reset_password']); 
 	Route::post('/logout',[ApiController::class, 'user_logout']); 
 	Route::post('/get-profile',[ApiController::class, 'user_profile']); 
-	Route::post('/update-profile',[ApiController::class, 'user_update_profile']); 
+	Route::post('/update-profile',[ApiController::class, 'user_update_profile']);
+
+
 });
