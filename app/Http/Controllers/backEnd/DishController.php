@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Chef;
 use App\Models\Dish;
 use App\Models\DishIngriedient;
+use App\Models\DishCategory;
 use Hash;
 
 
@@ -59,6 +60,14 @@ class DishController extends Controller
                         $add_ingredients->save();
                     }
                 }
+                if(!empty($data['category'])){
+                    foreach($data['category'] as $value){
+                        $add_category           = new DishCategory;
+                        $add_category->dish_id  = $dish_id;
+                        $add_category->type     = $value;
+                        $add_category->save();
+                    }
+                }
                 return redirect('/admin/chef/dish/'.$chef_id)->with('success','Dish Added successfully');
             }else{
                 return redirect('/admin/chef/dish/'.$chef_id)->with('error',COMMON_ERROR);
@@ -72,11 +81,11 @@ class DishController extends Controller
     public function edit(Request $request, $dish_id){
         if($request->isMethod('post')){
             $data = $request->all();
-            // dd($data);
             $edit_dish                     = Dish::find($dish_id);
             $edit_dish->name               = $data['name'];
             $edit_dish->description        = isset($data['description']) ? $data['description'] : '';
             $edit_dish->price              = $data['price'];
+            // dd($data['category']);
             $edit_dish->time_taken         = $data['time_taken'];
             $edit_dish->category           = $data['category'];
             $edit_dish->status             = $data['status'];
@@ -105,17 +114,26 @@ class DishController extends Controller
                         $add_ingredients->save();
                     }
                 }
-
+                // $delete_dish_ingriedent =  DishCategory::where('dish_id',$data['dish_id'])->delete();
+                // if(!empty($data['category'])){
+                //     foreach($data['category'] as $value){
+                //         $add_category           = new DishCategory;
+                //         $add_category->dish_id  = $dish_id;
+                //         $add_category->type     = $value;
+                //         $add_category->save();
+                //     }
+                // }
 
                 return redirect()->back()->with('success','Dish Edited Successfully');
             }else{
                 return redirect()->back()->with('error',COMMON_ERROR);
             }
         }
-
-        $dish     = Dish::with('dish_ingredients')->where('id',$dish_id)->first();
-        $chef_id  = $dish['chef_id'];
-        $page     = 'chefs';
+        // $DishCategory   = DishCategory::where('dish_id',$dish_id)->pluck('type')->toArray();
+        // dd($DishCategory);
+        $dish           = Dish::with('dish_ingredients')->where('id',$dish_id)->first();
+        $chef_id        = $dish['chef_id'];
+        $page           = 'chefs';
         return view('backEnd.chefManagement.dishManagement.form', compact('page','dish_id','dish','chef_id')); 
     }
 

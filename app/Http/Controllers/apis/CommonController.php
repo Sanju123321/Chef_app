@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\Chef;
 use App\Models\Dish;
 use App\Models\Country;
+use App\Models\Banner;
 use App\Models\Admin;
 use Mail, Hash, Auth;
 
@@ -84,5 +85,14 @@ class CommonController extends Controller
             $resp['msg']    =   'no Record found';   
         }
         return $resp; 
+    }
+
+
+    public function banner_list(){
+        $data           = Banner::get()->toArray();
+        $resp['status'] =   'true';
+        $resp['msg']    =   'Banner Listing';
+        $resp['data']   =   $data;
+        return $resp;
     }
 }
