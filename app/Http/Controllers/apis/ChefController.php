@@ -20,8 +20,13 @@ use Mail, Hash, Auth;
 
 class ChefController extends Controller
 {
+    public function get_list(){
+        $dishes = Dish::with('dish_ingredients')->where('chef_id',15)->get()->toArray(); 
+        return $dishes;
+    }
     public function add_dish(Request $request){
         $data = $request->all();
+        
         
         $chef = Auth('chef-api')->userOrFail();
         $add_dishes                     =   new Dish;
@@ -47,8 +52,14 @@ class ChefController extends Controller
             $add_dishes->video = $base_url.'/'.$fileName;
         }
         if($add_dishes->save()){
-            if(!empty($data['ingredient'])){
-                foreach($data['ingredient'] as $key=>$ingredient){
+            $new_ingredient = json_decode($data['ingredient']);
+            $newarray = array_map(function ($v) {
+                return (array) $v ; // convert to array 
+            }, $new_ingredient);
+
+ 
+            if(!empty($newarray)){
+                foreach($newarray as $key=>$ingredient){
                     $add_ingredients                    = new DishIngriedient;
                     $add_ingredients->dish_id           = $add_dishes->id;
                     $add_ingredients->ingredient_name   = $ingredient['name'];
@@ -95,8 +106,13 @@ class ChefController extends Controller
         }
         if($edit_dish->save()){
             $delete_dish_ingriedent =  DishIngriedient::where('dish_id',$data['dish_id'])->delete();
-            if(!empty($data['ingredient'])){
-                foreach($data['ingredient'] as $key=>$ingredient){
+            $new_ingredient = json_decode($data['ingredient']);
+            $newarray = array_map(function ($v) {
+                return (array) $v ; // convert to array 
+            }, $new_ingredient);
+
+            if(!empty($newarray)){
+                foreach($newarray as $key=>$ingredient){
                     $add_ingredients                    = new DishIngriedient;
                     $add_ingredients->dish_id           = $dish_id;
                     $add_ingredients->ingredient_name   = $ingredient['name'];

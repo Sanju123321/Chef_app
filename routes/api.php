@@ -47,6 +47,9 @@ Route::group(['prefix'=>'chef'],function(){
 
 
 
+Route::post('/get_list', [ChefController::class, 'get_list']);
+
+
 Route::get('/country-list', [CommonController::class, 'country_list']);
 
 Route::get('/banner-list', [CommonController::class, 'banner_list']);
