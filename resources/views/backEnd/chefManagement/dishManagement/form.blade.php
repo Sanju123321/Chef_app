@@ -170,10 +170,14 @@
 	                           	<div class="form-group">
 									<label class="col-md-3 control-label">Category Type :</label>
 	                                <div class="col-md-6">
-		                                <select name="category" class="form-control">
-		                                    <option value="breakfast" <?php if(@$dish['category'] == "breakfast"){ echo 'selected';} ?> >Breakfast</option>
-		                                    <option value="lunch" <?php if(@$dish['category'] == "lunch"){ echo 'selected';} ?>>Lunch</option>
-		                                    <option value="dinner" <?php if(@$dish['category'] == "dinner"){ echo 'selected';} ?>>Dinner</option>
+	                                	<?php 
+	                                		$category_typ = array("breakfast", "lunch", "dinner");
+	                                		// dd($DishCategory);
+	                                	?>
+		                                <select name="category[]" class="form-control mul_category" multiple>
+		                                	@foreach($category_typ as $categories)
+		                                    <option value="{{ $categories }}" @if(in_array($categories, $DishCategory)) selected  @endif>{{ ucfirst($categories) }}</option>
+		                                    @endforeach
 		                                </select>
 			                        </div>
 	                            </div>

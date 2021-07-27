@@ -30,7 +30,7 @@ class DishController extends Controller
             $add_dishes->description        = isset($data['description']) ? $data['description'] : '';
             $add_dishes->price              = $data['price'];
             $add_dishes->time_taken         =  $data['time_taken'];
-            $add_dishes->category           =  $data['category'];
+            // $add_dishes->category           =  $data['category'];
             $add_dishes->chef_id            = $chef_id;
             $add_dishes->status             = $data['status'];
 
@@ -63,7 +63,7 @@ class DishController extends Controller
                 if(!empty($data['category'])){
                     foreach($data['category'] as $value){
                         $add_category           = new DishCategory;
-                        $add_category->dish_id  = $dish_id;
+                        $add_category->dish_id  = $add_dishes->id;
                         $add_category->type     = $value;
                         $add_category->save();
                     }
@@ -73,14 +73,15 @@ class DishController extends Controller
                 return redirect('/admin/chef/dish/'.$chef_id)->with('error',COMMON_ERROR);
             }
         }
-       
+        $DishCategory = [];
         $page     = 'chefs';
-        return view('backEnd.chefManagement.dishManagement.form', compact('page','chef_id')); 
+        return view('backEnd.chefManagement.dishManagement.form', compact('page','chef_id','DishCategory')); 
     }
 
     public function edit(Request $request, $dish_id){
         if($request->isMethod('post')){
             $data = $request->all();
+            // dd($data);
             $edit_dish                     = Dish::find($dish_id);
             $edit_dish->name               = $data['name'];
             $edit_dish->description        = isset($data['description']) ? $data['description'] : '';
@@ -114,27 +115,27 @@ class DishController extends Controller
                         $add_ingredients->save();
                     }
                 }
-                // $delete_dish_ingriedent =  DishCategory::where('dish_id',$data['dish_id'])->delete();
-                // if(!empty($data['category'])){
-                //     foreach($data['category'] as $value){
-                //         $add_category           = new DishCategory;
-                //         $add_category->dish_id  = $dish_id;
-                //         $add_category->type     = $value;
-                //         $add_category->save();
-                //     }
-                // }
+                $delete_dish_ingriedent =  DishCategory::where('dish_id',$data['dish_id'])->delete();
+                if(!empty($data['category'])){
+                    foreach($data['category'] as $value){
+                        $add_category           = new DishCategory;
+                        $add_category->dish_id  = $dish_id;
+                        $add_category->type     = $value;
+                        $add_category->save();
+                    }
+                }
 
                 return redirect()->back()->with('success','Dish Edited Successfully');
             }else{
                 return redirect()->back()->with('error',COMMON_ERROR);
             }
         }
-        // $DishCategory   = DishCategory::where('dish_id',$dish_id)->pluck('type')->toArray();
+        $DishCategory   = DishCategory::where('dish_id',$dish_id)->pluck('type')->toArray();
         // dd($DishCategory);
         $dish           = Dish::with('dish_ingredients')->where('id',$dish_id)->first();
         $chef_id        = $dish['chef_id'];
         $page           = 'chefs';
-        return view('backEnd.chefManagement.dishManagement.form', compact('page','dish_id','dish','chef_id')); 
+        return view('backEnd.chefManagement.dishManagement.form', compact('page','dish_id','dish','chef_id','DishCategory')); 
     }
 
     public function delete($dish_id){

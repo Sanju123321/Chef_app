@@ -34,7 +34,7 @@ class ChefController extends Controller
         $add_dishes->description        =   isset($data['description']) ? $data['description'] : '';
         $add_dishes->price              =   $data['price'];
         $add_dishes->time_taken         =   $data['time_taken'];
-        $add_dishes->category           =   $data['category'];
+        // $add_dishes->category           =   $data['category'];
         $add_dishes->chef_id            =   $chef['id'];
         $add_dishes->status             =   'active';
 
@@ -69,6 +69,22 @@ class ChefController extends Controller
                     $add_ingredients->save();
                 }
             }
+
+            $new_category = json_decode($data['category']);
+            $newarray1 = array_map(function ($v) {
+                return (array) $v ; // convert to array 
+            }, $new_category);
+
+ 
+            if(!empty($newarray1)){
+                foreach($newarray1 as $categories){
+                    $add_category           = new DishCategory;
+                    $add_category->dish_id  = $add_dishes->id;
+                    $add_category->type     = $categories;
+                    $add_category->save();
+                }
+            }
+            
             $resp['status'] = 'true';
             $resp['msg']    = 'Dish Added successfully';
         }else{
@@ -122,6 +138,25 @@ class ChefController extends Controller
                 }
             }
 
+
+            $delete_dish_category =  DishCategory::where('dish_id',$data['dish_id'])->delete();
+            
+            $new_category = json_decode($data['category']);
+            $newarray1 = array_map(function ($v) {
+                return (array) $v ; // convert to array 
+            }, $new_category);
+
+ 
+            if(!empty($newarray1)){
+                foreach($newarray1 as $categories){
+                    $add_category           = new DishCategory;
+                    $add_category->dish_id  = $add_dishes->id;
+                    $add_category->type     = $categories;
+                    $add_category->save();
+                }
+            }
+            
+
             $resp['status'] = 'true';
             $resp['msg']    = 'Dish Edited Successfully';
         }else{
@@ -171,8 +206,7 @@ class ChefController extends Controller
         $dish_search    = Dish::with('dish_ingredients')
                                     ->where('chef_id',$chef['id'])
                                     ->where(function($q) use($search) {
-                                        $q->where('name','like','%'.$search.'%')
-                                            ->orWhere('category','like','%'.$search.'%');
+                                        $q->where('name','like','%'.$search.'%');
                                     })
                                     ->whereNull('deleted_at')
                                     ->get()->toArray();
